@@ -7,7 +7,8 @@
 add_executable(unitTests
   unitTests.cpp
 )
-target_link_libraries(main PUBLIC lib_core pugixml sfml-window sfml-graphics sfml-audio)
+target_link_libraries(unitTests GTest::gtest_main lib_core lib_core pugixml sfml-window sfml-graphics sfml-audio)
+
 
 # The next two lines enable CMake’s test runner to discover the tests included in the binary,
 # using the GoogleTest CMake module.

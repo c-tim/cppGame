@@ -4,10 +4,10 @@ add_executable(main
 
 target_link_libraries(main PUBLIC lib_core pugixml sfml-window sfml-graphics sfml-audio)
 
-add_custom_target(copy-res ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/res)
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/res
-                   DEPENDS ${CMAKE_SOURCE_DIR}/res
+add_custom_target(copy-ressources ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ressources)
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ressources
+                   DEPENDS ${CMAKE_SOURCE_DIR}/ressources
                    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
-                           ${CMAKE_SOURCE_DIR}/res
-                           ${CMAKE_CURRENT_BINARY_DIR}/res)
-add_dependencies(main copy-res)
+                           ${CMAKE_SOURCE_DIR}/ressources
+                           ${CMAKE_CURRENT_BINARY_DIR}/ressources)
+add_dependencies(main copy-ressources)
