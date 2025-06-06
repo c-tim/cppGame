@@ -28,6 +28,7 @@ FetchContent_MakeAvailable(pugixml)
 add_subdirectory(src/core)
 add_subdirectory(src/main)
 
+
 #
 # Include GoogleTest
 #
@@ -45,3 +46,4 @@ include(GoogleTest)
 enable_testing()
 add_subdirectory(src/test)
 
+FILE(COPY ressources DESTINATION "${CMAKE_BINARY_DIR}")

@@ -4,6 +4,7 @@ add_library(
     Entity.hpp
     Human.hpp
     Human.cpp
+    animatedSprite.hpp
 )
 
 target_include_directories(entities PUBLIC ./)

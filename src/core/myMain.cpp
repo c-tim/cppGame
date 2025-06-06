@@ -30,6 +30,9 @@ int myMain() {
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
+  sf::Texture testTexture("ressources/animation/walkLeft/walk1.png");
+  sf::Sprite testSprite(testTexture);
+
   gameEvent::game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
   
@@ -51,6 +54,7 @@ int myMain() {
     }
     window.clear();
     window.draw(shape);
+    window.draw(testSprite);
     window.display();
   }
 
