@@ -3,6 +3,7 @@
 #include "myMain.h"
 #include "gameManager.hpp"
 #include <gameDatas.hpp>
+#include <animatedSprite.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -33,6 +34,9 @@ int myMain() {
   sf::Texture testTexture("ressources/animation/walkLeft/walk1.png");
   sf::Sprite testSprite(testTexture);
 
+  animatedSprite testAnimated{};
+  testAnimated.addAnimation("walkLeft","walk",33);
+
   gameEvent::game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
   
@@ -40,6 +44,7 @@ int myMain() {
   //instance_game_manager.generatePNJs
 
 
+  int temp_i = 0;
   while (window.isOpen()) {
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>()) window.close();
@@ -52,9 +57,14 @@ int myMain() {
       }
       
     }
+    ++temp_i;
+    if(temp_i > 30){
+      temp_i = 0;
+    }
     window.clear();
     window.draw(shape);
-    window.draw(testSprite);
+   // window.draw(testSprite);
+   testAnimated.renderFrameOfAnimation(window, 0, temp_i);
     window.display();
   }
 
