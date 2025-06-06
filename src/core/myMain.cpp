@@ -1,28 +1,40 @@
+
+//written libraries
 #include "myMain.h"
+#include "gameManager.hpp"
+#include <gameDatas.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#define gData GameDatas
+
+
 using namespace std;
 
-// window datas
-struct windowsData {
-  int width;
-  int height;
+  //set a static reference to gameManagerInstance, callable by everyone (TODO may be bad practice)
+namespace gameEvent{
+    gameManager game_manager{};
+}
 
-};
 
-const struct windowsData mainWindow{700, 500};
+
 
 int myMain() {
   // Creating the window
-  sf::RenderWindow window{sf::VideoMode({mainWindow.width, mainWindow.height}),
+  sf::RenderWindow window{sf::VideoMode({gData::mainWindow.width, gData::mainWindow.height}),
                           "SFML works!"};
 
   window.setFramerateLimit(30);
 
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
+
+  gameEvent::game_manager.initialize_game(); //TODO merge all behaviours for lisibility
+
+  
+
+  //instance_game_manager.generatePNJs
 
 
   while (window.isOpen()) {

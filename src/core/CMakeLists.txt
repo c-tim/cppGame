@@ -3,6 +3,7 @@ add_library(lib_core
       pnjManager.hpp
       gameManager.cpp
       gameManager.hpp
+      gameDatas.hpp
       myMain.cpp
       myMain.h
 )
