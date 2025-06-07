@@ -8,7 +8,9 @@ using std::cout;
 // TODO ask if good practice
 #define gm gameManager
 
-void gm::initialize_game() { gm::generatePNJs(GameDatas::spawned_pnj); }
+void gm::initialize_game() { 
+  
+  gm::generatePNJs(GameDatas::spawned_pnj); }
 
 // TODO, the random generator could have float value if we want to
 int generate_random_number(int start, int end) {
@@ -26,8 +28,12 @@ void gm::generatePNJ() {
       GameDatas::playableAreaY[0], GameDatas::playableAreaY[1]);
 
   std::unique_ptr<Human> ptrHuman = std::make_unique<Human>(
-      idNextEntity, sf::Vector2f{randPositionX, randPositionY});
+      idNextEntity, sf::Vector2f{randPositionX, randPositionY}, res);
   cout << "spawned pnj : " << ptrHuman->to_string() << "\n";
+
+
+
+  
   ++idNextEntity;
   spawned_entities.push_back(std::move(ptrHuman));
 }
@@ -39,3 +45,9 @@ void gm::generatePNJs(int count) {
 }
 
 void gameManager::addEntity(Entity* entity) { cout << "remove this"; }
+
+void gameManager::renderEntities( sf::RenderWindow &window){
+  for (const auto& entity : spawned_entities) {
+    entity->render(window);
+  }
+}

@@ -29,7 +29,7 @@ class Entity {
 
   // std::ostream& operator<<(std::ostream& os);
 
-  virtual void render(sf::RenderWindow window) = 0;
+  virtual void render( sf::RenderWindow &window) = 0;
 
   // easier than operator<< but should fix issue later (TODO)
 };

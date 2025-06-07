@@ -4,6 +4,7 @@
 #include "gameManager.hpp"
 #include <gameDatas.hpp>
 #include <animatedSprite.hpp>
+#include <ressourcesLoader.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -14,9 +15,9 @@
 using namespace std;
 
   //set a static reference to gameManagerInstance, callable by everyone (TODO may be bad practice)
-namespace gameEvent{
-    gameManager game_manager{};
-}
+/*namespace gameEvent{
+    gameManager game_manager{resManager};
+}*/
 
 
 
@@ -28,6 +29,9 @@ int myMain() {
 
   window.setFramerateLimit(30);
 
+  ressourceManager resManager;
+  gameManager game_manager{resManager};
+
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
@@ -37,7 +41,7 @@ int myMain() {
   animatedSprite testAnimated{};
   testAnimated.addAnimation("walkLeft","walk",33);
 
-  gameEvent::game_manager.initialize_game(); //TODO merge all behaviours for lisibility
+  game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
   
 
@@ -64,6 +68,7 @@ int myMain() {
     window.clear();
     window.draw(shape);
    // window.draw(testSprite);
+   game_manager.renderEntities(window);
    testAnimated.renderFrameOfAnimation(window, 0, temp_i);
     window.display();
   }
