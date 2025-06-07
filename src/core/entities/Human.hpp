@@ -8,10 +8,8 @@
 
 class Human : public Entity {
  private:
-  animatedSprite &aSprite;
-  static const int speed = 5;
  public:
-  Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position), aSprite{res.humanAnimations} {
+  Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, 0.05)  {
     //aSprite = res.humanAnimations;
     // aSprite.addAnimation("walkLeft", "walk", 30);
   }

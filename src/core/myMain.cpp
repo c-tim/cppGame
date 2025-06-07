@@ -67,11 +67,11 @@ int myMain() {
       temp_i = 0;
     }
     gameManager::setDeltaTime();
-    cout<<game_manager.deltaTime()<<"\n";
+    cout<<game_manager.deltaTime()<<" deltaTime\n";
     window.clear();
     window.draw(shape);
    // window.draw(testSprite);
-   game_manager.renderEntities(window);
+   game_manager.render(window);
    testAnimated.renderFrameOfAnimation(window, 0, temp_i);
     window.display();
   }

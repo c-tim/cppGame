@@ -57,18 +57,23 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
 
   //We can skip frames if the game runs faster than the animSpeed, but we still have to keep half frames at least
   for (int j = 0;
-       j < (int)(animations[currentAnim].numberFrame / 2) - 1; j++) {
+       j < (int)(animations[currentAnim].numberFrame / 4) - 1; j++) {
     if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
         currentTickWaited) {
       currentTickWaited -= animatedSprite::animations[currentAnim].ticksBetweenFrame ;
+      if(currentTickWaited < 0){
+        currentTickWaited = 0;
+      }
       nextFrameAnim();
+    }else{
+      continue;
     }
   }
 
   sprite.setTexture(animations[currentAnim].texture[currentFrame], true);
   sprite.setPosition(pos);
-  cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
-       << currentTickWaited << "\n";
+ // cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
+  //     << currentTickWaited << "\n";
   window.draw(sprite);
 }
 

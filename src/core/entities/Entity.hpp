@@ -1,5 +1,7 @@
 #pragma once
 #include <myMain.h>
+#include <entityState.hpp>
+#include <animatedSprite.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -7,11 +9,20 @@
 
 class Entity {
  protected:
+
+  float speed;
+
   const int id;
   const std::string type;
 
+  entityState state;
+
+  animatedSprite &aSprite;
+
+
+
   /// @brief the position at the feet of the entity (natural position)
-  const sf::Vector2f feet_position;
+  sf::Vector2f feet_position;
 
   sf::Vector2f destination;
 
@@ -22,8 +33,10 @@ class Entity {
 
   bool has_destination = false;
 
-  Entity(const int id, std::string const& type, sf::Vector2f position)
-      : id{id}, type{type}, feet_position{position} {}
+  Entity(const int id, std::string const& type, sf::Vector2f position, animatedSprite &templateAnimatedSprite, float speed=1)
+      : id{id}, type{type}, feet_position{position}, aSprite{templateAnimatedSprite}, speed{speed}{
+        state.toIdle(aSprite.currentAnim);
+      }
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables

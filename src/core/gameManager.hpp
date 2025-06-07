@@ -1,5 +1,6 @@
 #pragma once
 #include <myMain.h>
+#include <entityManager.hpp>
 
 #include <Entity.hpp>
 #include <SFML/Graphics.hpp>
@@ -10,23 +11,20 @@
 
 class gameManager {
  private:
-  int idNextEntity = 0;
-  std::vector<std::unique_ptr<Entity>> spawned_entities;
+
+  entityManager entity_manager;
   ressourceManager &res;
 
   // static sf::Time last_calculated_time;
   static sf::Time deltaTime_calculated;
   static sf::Clock clock;
 
-  void generatePNJ();
-  void generatePNJs(int count);
-  void addEntity(Entity *entity);
 
  public:
   void initialize_game();
-  void renderEntities(sf::RenderWindow &window);
   static int deltaTime();
   static void setDeltaTime();
+  void render(sf::RenderWindow &window);
   gameManager(ressourceManager &instance_res) : res{instance_res} {
 
 gameManager::clock.start();

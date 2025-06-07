@@ -1,6 +1,6 @@
 add_library(lib_core
-      pnjManager.cpp
-      pnjManager.hpp
+      entityManager.cpp
+      entityManager.hpp
       gameManager.cpp
       gameManager.hpp
       gameDatas.hpp

@@ -17,7 +17,6 @@ class animatedSprite {
   sf::Texture timmy;
   sf::Sprite sprite;
 
-  int currentAnim=0;
   int currentTickWaited=0; //increment when called by renderNextTixkAnimation
   int currentFrame=0;
 
@@ -28,6 +27,9 @@ class animatedSprite {
 
 
  public:
+  int currentAnim=0;
+
+
   animatedSprite() : timmy("ressources/animation/walkLeft/walk1.png"), sprite(timmy){
     sprite.setScale(sf::Vector2f(0.2,0.2));
   }
