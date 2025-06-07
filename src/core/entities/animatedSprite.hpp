@@ -10,7 +10,7 @@ class animatedSprite {
   // an animatedSPrite has several animations, contained in the vector below
   struct animation {
     std::vector<sf::Texture> texture;
-    float speed; //number of tick between each frame
+    float ticksBetweenFrame; //number of tick between each frame
     int numberFrame;
     bool looped = true;
   };

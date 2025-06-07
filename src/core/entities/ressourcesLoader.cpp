@@ -4,6 +4,6 @@
 
 void ressourceManager::initializeRessourcesGame(){
 
-   humanAnimations.addAnimation("walkLeft", "walk", 30,5);
+   humanAnimations.addAnimation("walkLeft", "walk", 30,40);
 
 }

@@ -8,6 +8,10 @@ using std::cout;
 // TODO ask if good practice
 #define gm gameManager
 
+
+sf::Time gameManager::deltaTime_calculated;
+sf::Clock gameManager::clock;
+
 void gm::initialize_game() { 
   
   gm::generatePNJs(GameDatas::spawned_pnj); }
@@ -50,4 +54,12 @@ void gameManager::renderEntities( sf::RenderWindow &window){
   for (const auto& entity : spawned_entities) {
     entity->render(window);
   }
+}
+
+int gameManager::deltaTime(){
+  return deltaTime_calculated.asMilliseconds();
+}
+
+void gameManager::setDeltaTime(){
+  deltaTime_calculated = gameManager::clock.restart();
 }

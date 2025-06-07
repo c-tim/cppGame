@@ -1,4 +1,5 @@
 #include <animatedSprite.hpp>
+#include <gameManager.hpp>
 
 using std::string, std::cout;
 
@@ -6,7 +7,7 @@ void animatedSprite::addAnimation(const string &path, const string &name,
                                   int count, int speed) {
   struct animation newAnim;
   newAnim.numberFrame = count;
-  newAnim.speed = speed;
+  newAnim.ticksBetweenFrame = speed;
   // TODO change the beginning and the end (-1) to have the frame 0 (and correct
   // it in the name of the ressources)
   for (size_t i = 1; i < count + 1; i++) {
@@ -52,15 +53,22 @@ void animatedSprite::setCurrentAnim(int anim) {
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos) {
-  currentTickWaited++;
-  if (animatedSprite::animations[currentAnim].speed <= currentTickWaited) {
-    currentTickWaited = 0;
-    nextFrameAnim();
+  currentTickWaited += gameManager::deltaTime();
+
+  //We can skip frames if the game runs faster than the animSpeed, but we still have to keep half frames at least
+  for (int j = 0;
+       j < (int)(animations[currentAnim].numberFrame / 2) - 1; j++) {
+    if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
+        currentTickWaited) {
+      currentTickWaited -= animatedSprite::animations[currentAnim].ticksBetweenFrame ;
+      nextFrameAnim();
+    }
   }
 
   sprite.setTexture(animations[currentAnim].texture[currentFrame], true);
   sprite.setPosition(pos);
-  cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/" << currentTickWaited<<"\n";
+  cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
+       << currentTickWaited << "\n";
   window.draw(sprite);
 }
 

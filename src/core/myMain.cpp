@@ -28,6 +28,7 @@ int myMain() {
                           "SFML works!"};
 
   window.setFramerateLimit(30);
+  
 
   ressourceManager resManager;
   gameManager game_manager{resManager};
@@ -65,6 +66,8 @@ int myMain() {
     if(temp_i > 30){
       temp_i = 0;
     }
+    gameManager::setDeltaTime();
+    cout<<game_manager.deltaTime()<<"\n";
     window.clear();
     window.draw(shape);
    // window.draw(testSprite);

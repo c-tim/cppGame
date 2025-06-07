@@ -7,3 +7,5 @@ void Human::render( sf::RenderWindow &window) {
     aSprite.renderNextTickAnimation(window, feet_position);
     
 };
+
+
