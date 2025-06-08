@@ -10,6 +10,8 @@ void animatedSprite::addAnimation(const string &path, const string &name,
   newAnim.ticksBetweenFrame = speed;
   // TODO change the beginning and the end (-1) to have the frame 0 (and correct
   // it in the name of the ressources)
+  // UPDATE : for unknown reason walkL/R/U/D0 is not recognized so skip the
+  // index 0
   for (size_t i = 1; i < count + 1; i++) {
     sf::Texture texture;
     string fullPath = "ressources/animation/" + path + "/" + name +
@@ -49,30 +51,33 @@ void animatedSprite::setCurrentAnim(int anim) {
     return;
   }
   currentAnim = anim;
+  currentFrame = 0;
+  currentTickWaited =0;
 }
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos) {
   currentTickWaited += gameManager::deltaTime();
 
-  //We can skip frames if the game runs faster than the animSpeed, but we still have to keep half frames at least
-  for (int j = 0;
-       j < (int)(animations[currentAnim].numberFrame / 4) - 1; j++) {
+  // We can skip frames if the game runs faster than the animSpeed, but we still
+  // have to keep half frames at least
+  for (int j = 0; j < (int)(animations[currentAnim].numberFrame / 4) - 1; j++) {
     if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
         currentTickWaited) {
-      currentTickWaited -= animatedSprite::animations[currentAnim].ticksBetweenFrame ;
-      if(currentTickWaited < 0){
+      currentTickWaited -=
+          animatedSprite::animations[currentAnim].ticksBetweenFrame;
+      if (currentTickWaited < 0) {
         currentTickWaited = 0;
       }
       nextFrameAnim();
-    }else{
+    } else {
       continue;
     }
   }
 
   sprite.setTexture(animations[currentAnim].texture[currentFrame], true);
   sprite.setPosition(pos);
- // cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
+  // cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
   //     << currentTickWaited << "\n";
   window.draw(sprite);
 }
@@ -86,4 +91,5 @@ void animatedSprite::nextFrameAnim() {
   }
 }
 
-void animatedSprite::initialize() { addAnimation("walkLeft", "walk", 30); }
+void animatedSprite::initialize() {  // addAnimation("walkLeft", "walkL", 30);
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <animatedSprite.hpp>
 
 /// @brief state of entity, update animation each time when state changes
 class entityState {
@@ -12,15 +13,15 @@ class entityState {
 
  public:
   int getState();
-  int changeIdAnim(int &varAnim);
+  int changeIdAnim(animatedSprite &varAnim);
+  void setCurrentDirection(int dir,animatedSprite &varAnim);
 
-  void toIdle(int &varAnim, int dir = -1);
+  void toIdle(animatedSprite &varAnim, int dir = -1);
 
-  int getAxisMoving(sf::Vector2f direction);
+  int getAxisMoving(sf::Vector2f direction, animatedSprite &varAnim);
 
-  void moveDirection(sf::Vector2f normalized_dir, int &varAnim);
+  void moveDirection(sf::Vector2f normalized_dir, animatedSprite &varAnim);
 
   sf::Vector2f dirToVecDir(int dir);
   int vecDirToDir(sf::Vector2f);
-
 };

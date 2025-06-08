@@ -5,15 +5,21 @@ using std::cout;
 
 int entityState::getState() { return currentState; }
 
-int entityState::changeIdAnim(int &varAnim) {
+int entityState::changeIdAnim(animatedSprite &varAnim) {
   // TODO when has correct animation return correct idAnim
   // varAnim= (currentState + 1) * currentDirection;
   // return varAnim;
-  varAnim = 0;
+  varAnim.setCurrentAnim(currentState * 4 + currentDirection);
   return 0;
 }
 
-void entityState::toIdle(int &varAnim, int dir) {
+  void entityState::setCurrentDirection(int dir, animatedSprite &varAnim){
+    currentDirection = dir;
+    changeIdAnim(varAnim);
+  }
+
+
+void entityState::toIdle(animatedSprite &varAnim, int dir) {
   currentState = IDLE;
 
   if (dir >= 0 && dir <= 3) {
@@ -23,7 +29,8 @@ void entityState::toIdle(int &varAnim, int dir) {
   changeIdAnim(varAnim);
 }
 
-void entityState::moveDirection(sf::Vector2f normalized_dir, int &varAnim) {
+void entityState::moveDirection(sf::Vector2f normalized_dir,
+                                animatedSprite &varAnim) {
   // the entity has to move in only one direction, no diagonals
   if (!((abs(normalized_dir.x) == 1 && normalized_dir.y == 0) ||
         (abs(normalized_dir.y) == 1 && normalized_dir.x == 0))) {
@@ -75,10 +82,11 @@ int entityState::vecDirToDir(sf::Vector2f vec) {
 // strategy, if on one axis choose it, then if the currentDirection can be used
 // to get closer to destination use it
 //  else pick random axis between the two of destination (+/- x or +/- y)
-int entityState::getAxisMoving(sf::Vector2f direction) {
+int entityState::getAxisMoving(sf::Vector2f direction, animatedSprite &varAnim) {
   int testDir = vecDirToDir(direction);
   // -1 if null vector or two axis involved
   if (testDir != -1) {
+    setCurrentDirection(testDir, varAnim);
     return testDir;
   }
 
@@ -87,23 +95,52 @@ int entityState::getAxisMoving(sf::Vector2f direction) {
   produit_vec.x = direction.x * dirToVecDir(currentDirection).x;
   produit_vec.y = direction.y * dirToVecDir(currentDirection).y;
 
-//another test to see if now we have a direction (else the former direction is not compatible to reach destination)
+  // mistake on the product, if produit_vec has a component = 1, it means both
+  // dir have same directions
+  //TODO : too complicated maybe simpler approach
+
+  if(produit_vec.x > 0  || produit_vec.y>0){
+    return currentDirection;
+  }
+
+  /*if (produit_vec.x == 1) {
+    produit_vec.x = direction.x / abs(direction.x);
+  } else {
+    produit_vec.x = 0;
+  }
+
+  if (produit_vec.y == 1) {
+    produit_vec.y = direction.y / abs(direction.y);
+  } else {
+    produit_vec.y = 0;
+  }*/
+
+  // another test to see if now we have a direction (else the former direction
+  // is not compatible to reach destination)
   testDir = vecDirToDir(produit_vec);
   // -1 if null vector or two axis involved
   if (testDir != -1) {
+    setCurrentDirection(testDir, varAnim);
     return testDir;
   }
 
-  //last strategy random between the two axis
-  if((double) rand()/RAND_MAX > 0.5) {
-    if(direction.x<0){
+  // last strategy random between the two axis
+  if ((double)rand() / RAND_MAX > 0.5) {
+    if (direction.x < 0) {
+    setCurrentDirection(LEFT, varAnim);
       return LEFT;
     }
+    setCurrentDirection(RIGHT, varAnim);
+
     return RIGHT;
   }
 
-  if(direction.y<0){
+  if (direction.y < 0) {
+    setCurrentDirection(UP, varAnim);
+
     return UP;
   }
+    setCurrentDirection(DOWN, varAnim);
+
   return DOWN;
 }

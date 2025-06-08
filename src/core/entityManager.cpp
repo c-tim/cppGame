@@ -46,12 +46,23 @@ void EM::renderEntities(sf::RenderWindow &window) {
   }
 }
 
-void EM::swapStateEntities(float ratioToMove, float ratioToIdle) {
+void EM::swapStateToMoveEntities(float ratioToMove) {
   // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand()/RAND_MAX;
-    if (a > ratioToMove) {
+    if (a < ratioToMove && !e->isMoving()) {
+      cout<<"New destination\n";
       e->setDestination(random_pos_in_playable_area());
+    }
+  }
+}
+
+void EM::swapStateToIdleEntities(float ratioToIdle) {
+  // TODO add the same for Idle
+  for (auto &e : spawned_entities) {
+    double a = (double)rand()/RAND_MAX;
+    if (a < ratioToIdle) {
+      e->toIdle();
     }
   }
 }

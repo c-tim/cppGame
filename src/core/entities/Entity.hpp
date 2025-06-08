@@ -17,7 +17,7 @@ class Entity {
 
   entityState state;
 
-  animatedSprite &aSprite;
+  animatedSprite aSprite;
 
 
 
@@ -34,8 +34,8 @@ class Entity {
   bool has_destination = false;
 
   Entity(const int id, std::string const& type, sf::Vector2f position, animatedSprite &templateAnimatedSprite, float speed=1)
-      : id{id}, type{type}, feet_position{position}, aSprite{templateAnimatedSprite}, speed{speed}{
-        state.toIdle(aSprite.currentAnim);
+      : id{id}, type{type}, feet_position{position}, aSprite{templateAnimatedSprite.animations}, speed{speed}{
+        state.toIdle(aSprite);
       }
 
   // TODO not quite understood what exactly this do but prevent copy const
@@ -51,6 +51,10 @@ class Entity {
   void moveToDestination();
 
   void setDestination(sf::Vector2f destination);
+
+  void toIdle(int dir=-1);
+
+  bool isMoving();
 
   virtual void render( sf::RenderWindow &window) = 0;
 

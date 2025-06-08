@@ -36,11 +36,11 @@ int myMain() {
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
-  sf::Texture testTexture("ressources/animation/walkLeft/walk1.png");
+  sf::Texture testTexture("ressources/animation/walkLeft/walkL1.png");
   sf::Sprite testSprite(testTexture);
 
   animatedSprite testAnimated{};
-  testAnimated.addAnimation("walkLeft","walk",33);
+  testAnimated.addAnimation("walkLeft","walkL",33);
 
   game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 

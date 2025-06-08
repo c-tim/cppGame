@@ -19,7 +19,7 @@ std::string Entity::to_string() {
 void Entity::setDestination(sf::Vector2f dest) {
   destination = dest;
   has_destination = true;
-  state.moveDirection(sf::Vector2f{1, 0}, aSprite.currentAnim);
+  state.moveDirection(sf::Vector2f{1, 0}, aSprite);
   cout << "ID : " << id << " : destination set " << destination.x << "/"
        << destination.y << "\n";
 }
@@ -45,16 +45,16 @@ void Entity::moveToDestination() {
 
   sf::Vector2f direction = destination - feet_position;
 
-  if(abs(direction.x)<0.5){
+  if(abs(direction.x)<5 || std::isnan(direction.x)){
     direction.x=0;
   }
 
-   if(abs(direction.y)<0.5){
+   if(abs(direction.y)<5 || std::isnan(direction.y)){
     direction.y=0;
   }
 
   if (direction == sf::Vector2f{0,0}) {
-    state.toIdle(aSprite.currentAnim);
+    state.toIdle(aSprite);
     has_destination = false;
     return;
   }
@@ -62,8 +62,8 @@ void Entity::moveToDestination() {
   cout<<"distanceToObjective "<<std::to_string(distance(feet_position, destination)) << "\n";
 
   sf::Vector2f normalized_direction_to_take =
-      state.dirToVecDir(state.getAxisMoving(direction));
-  cout << "ID : " << id << " : position: " << feet_position.x << "/"
+      state.dirToVecDir(state.getAxisMoving(direction, aSprite));
+  /*cout << "ID : " << id << " : position: " << feet_position.x << "/"
        << feet_position.y << "\n";
 
   cout << "ID : " << id << " : destination to go : " << destination.x << "/"
@@ -71,7 +71,7 @@ void Entity::moveToDestination() {
   cout << "ID : " << id
        << " : direction to go : " << normalized_direction_to_take.x << "/"
        << normalized_direction_to_take.y << "\n";
-
+*/
        //we get the distance between pos and destination projected on the axis used to move
   float distanceToDestinationProjectedOnAxis =  distance(vectorialProduct(normalized_direction_to_take,feet_position), vectorialProduct(normalized_direction_to_take,destination) );
 
@@ -93,3 +93,11 @@ void Entity::moveToDestination() {
   // cout<< "ID : " << id <<" moving to "<<
   // destination.x<<"/"<<destination.y<<"\n";
 }
+  void Entity::toIdle(int dir){
+    state.toIdle(aSprite,dir);
+  }
+
+
+    bool Entity::isMoving(){
+      return state.getState()==1;
+    }
