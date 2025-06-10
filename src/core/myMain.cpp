@@ -70,7 +70,7 @@ int myMain() {
       temp_i = 0;
     }
     gameManager::setDeltaTime();
-    gameManager::callInputEvent();
+    //gameManager::callInputEvent();
 
     //TODO implement deargui when possible
     /*ImGui::SFML::Update(window, gameManager::deltaTime());
@@ -86,7 +86,7 @@ int myMain() {
     window.clear();
     window.draw(shape);
    // window.draw(testSprite);
-   game_manager.render(window);
+   game_manager.applyGameLoopAndRender(window);
    testAnimated.renderFrameOfAnimation(window, 0, temp_i);
     window.display();
   }

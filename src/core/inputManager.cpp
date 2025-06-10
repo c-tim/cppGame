@@ -1,10 +1,14 @@
 #include <SFML/Window.hpp>
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include <inputManager.hpp>
 
 using std::cout;
 
-void getInputsKeyboard(){
+
+
+
+sf::Vector2i getInputsKeyboard(){
     sf::Vector2i dir{0,0};
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)){
         dir.x += 1;
@@ -19,5 +23,7 @@ void getInputsKeyboard(){
         dir.y -= 1;
     }
 
-    cout<< " Inputs "
+    cout<< " Inputs : "<< dir.x<< " / "<< dir.y<<"\n";
+    return dir;
 }
+

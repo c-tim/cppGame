@@ -4,6 +4,8 @@ add_library(
     Entity.hpp
     Human.hpp
     Human.cpp
+    Player.cpp
+    Player.hpp
     entityState.hpp
     entityState.cpp
     animatedSprite.hpp

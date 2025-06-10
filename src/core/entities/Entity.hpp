@@ -27,6 +27,8 @@ class Entity {
   // the feet_position
 
  public:
+bool playable;
+  virtual ~Entity() { };
   sf::Vector2f getPosition();
 
   bool canHaveNewDestination();
@@ -34,25 +36,30 @@ class Entity {
   bool has_destination = false;
 
   Entity(const int id, std::string const& type, sf::Vector2f position,
-         animatedSprite& templateAnimatedSprite, float speed = 1)
+         animatedSprite& templateAnimatedSprite, float speed = 1, bool isPlayable=false)
       : id{id},
         type{type},
         feet_position{position},
         aSprite{templateAnimatedSprite.animations},
-        speed{speed} {
+        speed{speed},
+        playable{isPlayable} {
     state.toIdle(aSprite);
   }
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables
-  Entity(const Entity&) = delete;
-  Entity& operator=(const Entity&) = delete;
+  /*Entity(const Entity&) = delete;
+  Entity& operator=(const Entity&) = delete;*/
 
   std::string to_string();
 
   // std::ostream& operator<<(std::ostream& os);
 
   void moveToDestination();
+
+  sf::Vector2f getDirectionFromDestination();
+
+  void moveWithDir(sf::Vector2i dir);
 
   void setDestination(sf::Vector2f destination);
 

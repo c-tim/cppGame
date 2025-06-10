@@ -1,5 +1,6 @@
 #include <Human.hpp>
 #include <entityManager.hpp>
+#include <inputManager.hpp>
 #include <random>
 
 #define EM entityManager
@@ -46,6 +47,7 @@ bool EM::compZOrderEntity(std::unique_ptr<Entity> &a,
 }
 
 void EM::sortEntityByZOrder(
+    // TODO adjust zorder with player
     std::vector<std::unique_ptr<Entity>> &list_entities) {
   sort(list_entities.begin(), list_entities.end(), compZOrderEntity);
 }
@@ -55,9 +57,13 @@ void EM::renderEntities(sf::RenderWindow &window) {
   for (const auto &entity : spawned_entities) {
     entity->render(window);
   }
+
+  for (auto &e : players) {
+    e.render(window);
+  }
 }
 
-void EM::swapStateToMoveEntities(float ratioToMove) {
+void EM::swapStateToMovePNJEntities(float ratioToMove) {
   // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
@@ -69,7 +75,7 @@ void EM::swapStateToMoveEntities(float ratioToMove) {
   }
 }
 
-void EM::swapStateToIdleEntities(float ratioToIdle) {
+void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
   // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
@@ -79,8 +85,21 @@ void EM::swapStateToIdleEntities(float ratioToIdle) {
   }
 }
 
-void EM::moveEntities() {
+void EM::movePNJEntities() {
   for (auto &e : spawned_entities) {
     e->moveToDestination();
   }
+}
+
+void EM::movePlayers() {
+  for (auto &e : players) {
+    sf::Vector2i dir = getInputsKeyboard();
+    e.moveWithDir(dir);
+  }
+}
+
+void EM::generatePlayer(ressourceManager &res) {
+  player p{idNextEntity, random_pos_in_playable_area(), res};
+  ++idNextEntity;
+  players.emplace_back(p);
 }

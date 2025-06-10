@@ -12,15 +12,17 @@ sf::Clock gameManager::clock;
 
 void gm::initialize_game() {
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
-  entity_manager.swapStateToMoveEntities(GameDatas::ratioMovePNJStart);
+  entity_manager.generatePlayer(res);
+  entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJStart);
 }
 
 
 
-void gm::render(sf::RenderWindow &window) {
-  entity_manager.swapStateToMoveEntities(GameDatas::ratioMovePNJGameLoop);
-  entity_manager.swapStateToIdleEntities(GameDatas::ratioIdlePNJGameLoop);
-  entity_manager.moveEntities();
+void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
+  entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJGameLoop);
+  entity_manager.swapStateToIdlePNJEntities(GameDatas::ratioIdlePNJGameLoop);
+  entity_manager.movePNJEntities();
+  entity_manager.movePlayers();
 
   entity_manager.renderEntities(window);
 }

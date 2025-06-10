@@ -22,10 +22,10 @@ class entityState {
   void toIdle(animatedSprite &varAnim, int dir = -1);
   void isMoving(int dir = -1);
 
-  int getAxisMoving(sf::Vector2f direction, animatedSprite &varAnim);
+  int getAxisMoving(sf::Vector2f direction);
 
-  void moveDirection(sf::Vector2f normalized_dir, animatedSprite &varAnim);
+  void moveDirection(sf::Vector2i normalized_dir, animatedSprite &varAnim);
 
-  sf::Vector2f dirToVecDir(int dir);
+  sf::Vector2i dirToVecDir(int dir);
   int vecDirToDir(sf::Vector2f);
 };

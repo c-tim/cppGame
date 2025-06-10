@@ -30,7 +30,7 @@ void entityState::toIdle(animatedSprite &varAnim, int dir) {
   changeIdAnim(varAnim);
 }
 
-void entityState::moveDirection(sf::Vector2f normalized_dir,
+void entityState::moveDirection(sf::Vector2i normalized_dir,
                                 animatedSprite &varAnim) {
   // the entity has to move in only one direction, no diagonals
   if (!((abs(normalized_dir.x) == 1 && normalized_dir.y == 0) ||
@@ -41,7 +41,7 @@ void entityState::moveDirection(sf::Vector2f normalized_dir,
   }
 
   currentState = MOVING;
-  currentDirection = vecDirToDir(normalized_dir);
+  currentDirection = vecDirToDir((sf::Vector2f) normalized_dir);
 
   /*if(currentDirection != RIGHT){
       //cout<<"ha";
@@ -62,16 +62,16 @@ void entityState::moveDirection(sf::Vector2f normalized_dir,
   changeIdAnim(varAnim);
 }
 
-sf::Vector2f entityState::dirToVecDir(int dir) {
+sf::Vector2i entityState::dirToVecDir(int dir) {
   // TODO check if correct vector
   if (dir == UP) {
-    return sf::Vector2f{0, -1};
+    return sf::Vector2i{0, -1};
   } else if (dir == LEFT) {
-    return sf::Vector2f{-1, 0};
+    return sf::Vector2i{-1, 0};
   } else if (dir == DOWN) {
-    return sf::Vector2f{0, 1};
+    return sf::Vector2i{0, 1};
   }
-  return sf::Vector2f{1, 0};
+  return sf::Vector2i{1, 0};
 }
 
 int entityState::vecDirToDir(sf::Vector2f vec) {
@@ -91,12 +91,11 @@ int entityState::vecDirToDir(sf::Vector2f vec) {
 // strategy, if on one axis choose it, then if the currentDirection can be used
 // to get closer to destination use it
 //  else pick random axis between the two of destination (+/- x or +/- y)
-int entityState::getAxisMoving(sf::Vector2f direction,
-                               animatedSprite &varAnim) {
-  int testDir = vecDirToDir(direction);
+int entityState::getAxisMoving(sf::Vector2f direction) {
+  int testDir = vecDirToDir((sf::Vector2f) direction);
   // -1 if null vector or two axis involved
   if (testDir != -1) {
-    setCurrentDirection(testDir, varAnim);
+    //   setCurrentDirection(testDir, varAnim);
     return testDir;
   }
 
@@ -127,30 +126,30 @@ int entityState::getAxisMoving(sf::Vector2f direction,
 
   // another test to see if now we have a direction (else the former direction
   // is not compatible to reach destination)
-  testDir = vecDirToDir(produit_vec);
+  testDir = vecDirToDir((sf::Vector2f) produit_vec);
   // -1 if null vector or two axis involved
   if (testDir != -1) {
-    setCurrentDirection(testDir, varAnim);
+    //setCurrentDirection(testDir, varAnim);
     return testDir;
   }
 
   // last strategy random between the two axis
   if ((double)rand() / RAND_MAX > 0.5) {
     if (direction.x < 0) {
-      setCurrentDirection(LEFT, varAnim);
+      // setCurrentDirection(LEFT, varAnim);
       return LEFT;
     }
-    setCurrentDirection(RIGHT, varAnim);
+    // setCurrentDirection(RIGHT, varAnim);
 
     return RIGHT;
   }
 
   if (direction.y < 0) {
-    setCurrentDirection(UP, varAnim);
+    // setCurrentDirection(UP, varAnim);
 
     return UP;
   }
-  setCurrentDirection(DOWN, varAnim);
+  // setCurrentDirection(DOWN, varAnim);
 
   return DOWN;
 }
