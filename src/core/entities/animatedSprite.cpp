@@ -43,13 +43,21 @@ void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
   window.draw(sprite);
 }
 
+
+
 void animatedSprite::setCurrentAnim(int anim) {
   // redundant with above method but necessary in order to abort in case of
   // error
+
   if (animations.size() <= anim) {
     cout << "The animatedSprite doesn't have as much animations\n";
     return;
   }
+
+  if(anim==currentAnim){
+    return;
+  }
+
   currentAnim = anim;
   currentFrame = 0;
   currentTickWaited =0;
@@ -57,6 +65,8 @@ void animatedSprite::setCurrentAnim(int anim) {
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos) {
+
+        
   currentTickWaited += gameManager::deltaTime();
 
   // We can skip frames if the game runs faster than the animSpeed, but we still

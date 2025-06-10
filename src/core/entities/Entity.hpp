@@ -1,15 +1,14 @@
 #pragma once
 #include <myMain.h>
-#include <entityState.hpp>
-#include <animatedSprite.hpp>
 
 #include <SFML/Graphics.hpp>
+#include <animatedSprite.hpp>
+#include <entityState.hpp>
 #include <iostream>
 #include <string>
 
 class Entity {
  protected:
-
   float speed;
 
   const int id;
@@ -18,8 +17,6 @@ class Entity {
   entityState state;
 
   animatedSprite aSprite;
-
-
 
   /// @brief the position at the feet of the entity (natural position)
   sf::Vector2f feet_position;
@@ -30,33 +27,40 @@ class Entity {
   // the feet_position
 
  public:
+  sf::Vector2f getPosition();
+
+  bool canHaveNewDestination();
 
   bool has_destination = false;
 
-  Entity(const int id, std::string const& type, sf::Vector2f position, animatedSprite &templateAnimatedSprite, float speed=1)
-      : id{id}, type{type}, feet_position{position}, aSprite{templateAnimatedSprite.animations}, speed{speed}{
-        state.toIdle(aSprite);
-      }
+  Entity(const int id, std::string const& type, sf::Vector2f position,
+         animatedSprite& templateAnimatedSprite, float speed = 1)
+      : id{id},
+        type{type},
+        feet_position{position},
+        aSprite{templateAnimatedSprite.animations},
+        speed{speed} {
+    state.toIdle(aSprite);
+  }
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables
   Entity(const Entity&) = delete;
   Entity& operator=(const Entity&) = delete;
 
-   std::string to_string();
+  std::string to_string();
 
   // std::ostream& operator<<(std::ostream& os);
-
 
   void moveToDestination();
 
   void setDestination(sf::Vector2f destination);
 
-  void toIdle(int dir=-1);
+  void toIdle(int dir = -1);
 
   bool isMoving();
 
-  virtual void render( sf::RenderWindow &window) = 0;
+  virtual void render(sf::RenderWindow& window) = 0;
 
   // easier than operator<< but should fix issue later (TODO)
 };

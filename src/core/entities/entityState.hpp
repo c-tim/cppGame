@@ -13,10 +13,14 @@ class entityState {
 
  public:
   int getState();
+  int getIdAnim();
   int changeIdAnim(animatedSprite &varAnim);
-  void setCurrentDirection(int dir,animatedSprite &varAnim);
+
+
+  void setCurrentDirection(int dir, animatedSprite &varAnim);
 
   void toIdle(animatedSprite &varAnim, int dir = -1);
+  void isMoving(int dir = -1);
 
   int getAxisMoving(sf::Vector2f direction, animatedSprite &varAnim);
 

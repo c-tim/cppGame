@@ -19,9 +19,10 @@ std::string Entity::to_string() {
 void Entity::setDestination(sf::Vector2f dest) {
   destination = dest;
   has_destination = true;
-  state.moveDirection(sf::Vector2f{1, 0}, aSprite);
+  //state.moveDirection(sf::Vector2f{0, 0}, aSprite);
   cout << "ID : " << id << " : destination set " << destination.x << "/"
        << destination.y << "\n";
+  state.isMoving(state.vecDirToDir(dest-feet_position));
 }
 
 //TODO find the real function to square
@@ -39,6 +40,7 @@ sf::Vector2f vectorialProduct(sf::Vector2f a, sf::Vector2f b){
 }
 
 void Entity::moveToDestination() {
+  //TODO here to implement blocking move
   if (state.getState() == 0) {
     return;
   }
@@ -59,10 +61,12 @@ void Entity::moveToDestination() {
     return;
   }
 
-  cout<<"distanceToObjective "<<std::to_string(distance(feet_position, destination)) << "\n";
+  //cout<<"distanceToObjective "<<std::to_string(distance(feet_position, destination)) << "\n";
 
   sf::Vector2f normalized_direction_to_take =
       state.dirToVecDir(state.getAxisMoving(direction, aSprite));
+    
+  state.moveDirection(normalized_direction_to_take, aSprite);
   /*cout << "ID : " << id << " : position: " << feet_position.x << "/"
        << feet_position.y << "\n";
 
@@ -101,3 +105,11 @@ void Entity::moveToDestination() {
     bool Entity::isMoving(){
       return state.getState()==1;
     }
+
+     sf::Vector2f Entity::getPosition(){
+      return feet_position;
+     }
+
+       bool Entity::canHaveNewDestination(){
+    return state.getState() == 0;
+  }

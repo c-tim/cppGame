@@ -12,6 +12,10 @@ class entityManager {
 
   std::vector<std::unique_ptr<Entity>> spawned_entities;
 
+  static bool compZOrderEntity(std::unique_ptr<Entity> &a,
+                          std::unique_ptr<Entity> &b);
+  void sortEntityByZOrder(std::vector<std::unique_ptr<Entity>> &list_entities);
+
  public:
   void swapStateToMoveEntities(float ratioToMove);
   void swapStateToIdleEntities(float ratioToIdle);

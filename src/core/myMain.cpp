@@ -9,6 +9,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "imgui-SFML.h"  // for ImGui::SFML::* functions and SFML-specific overloads
+#include "imgui.h"
+
 #define gData GameDatas
 
 
@@ -67,7 +70,19 @@ int myMain() {
       temp_i = 0;
     }
     gameManager::setDeltaTime();
-    cout<<game_manager.deltaTime()<<" deltaTime\n";
+    gameManager::callInputEvent();
+
+    //TODO implement deargui when possible
+    /*ImGui::SFML::Update(window, gameManager::deltaTime());
+
+    ImGui::ShowDemoWindow();
+
+    ImGui::Begin("Hello, world!");
+    ImGui::Button("Look at this pretty button");
+    ImGui::End();*/
+
+
+    //cout<<game_manager.deltaTime()<<" deltaTime\n";
     window.clear();
     window.draw(shape);
    // window.draw(testSprite);

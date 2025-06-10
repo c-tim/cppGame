@@ -1,6 +1,7 @@
 #pragma once
 #include <myMain.h>
 #include <entityManager.hpp>
+#include <gameInputs.hpp>
 
 #include <Entity.hpp>
 #include <SFML/Graphics.hpp>
@@ -24,6 +25,7 @@ class gameManager {
   void initialize_game();
   static int deltaTime();
   static void setDeltaTime();
+  static void callInputEvent();
   void render(sf::RenderWindow &window);
   gameManager(ressourceManager &instance_res) : res{instance_res} {
 

@@ -15,6 +15,8 @@ void gm::initialize_game() {
   entity_manager.swapStateToMoveEntities(GameDatas::ratioMovePNJStart);
 }
 
+
+
 void gm::render(sf::RenderWindow &window) {
   entity_manager.swapStateToMoveEntities(GameDatas::ratioMovePNJGameLoop);
   entity_manager.swapStateToIdleEntities(GameDatas::ratioIdlePNJGameLoop);
@@ -27,4 +29,8 @@ int gameManager::deltaTime() { return deltaTime_calculated.asMilliseconds(); }
 
 void gameManager::setDeltaTime() {
   deltaTime_calculated = gameManager::clock.restart();
+}
+
+void gameManager::callInputEvent(){
+  getInputsKeyboard();
 }
