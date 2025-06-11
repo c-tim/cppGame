@@ -50,10 +50,9 @@ sf::Vector2f direction = getDirectionFromDestination();
   // cout<<"distanceToObjective "<<std::to_string(distance(feet_position,
   // destination)) << "\n";
 
-  sf::Vector2i normalized_direction_to_take =
-      state.dirToVecDir(state.getAxisMoving( direction));
 
-      moveWithDir(normalized_direction_to_take);
+
+      moveWithDir(direction);
 
 }
 void Entity::toIdle(int dir) { state.toIdle(aSprite, dir); }
@@ -83,9 +82,10 @@ sf::Vector2f Entity::getDirectionFromDestination() {
   return direction;
 }
 
-void Entity::moveWithDir(sf::Vector2i normalized_direction_to_take) {
+void Entity::moveWithDir(sf::Vector2f direction) {
 
-
+  sf::Vector2i normalized_direction_to_take =
+      state.dirToVecDir(state.getAxisMoving( direction));
     state.moveDirection(normalized_direction_to_take, aSprite);
   /*cout << "ID : " << id << " : position: " << feet_position.x << "/"
        << feet_position.y << "\n";

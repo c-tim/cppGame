@@ -33,6 +33,15 @@ void EM::generateHuman(ressourceManager &res) {
   spawned_entities.push_back(std::move(ptrHuman));
 }
 
+void EM::generatePlayer(ressourceManager &res) {
+  std::unique_ptr<player>  p = std::make_unique<player>(idNextEntity, random_pos_in_playable_area(), res);
+  ++idNextEntity;
+    cout << "spawned human : " << p->to_string() << "\n";
+
+  spawned_entities.push_back(std::move(p));
+}
+
+
 void EM::generateHumans(int count, ressourceManager &res) {
   for (int i = 0; i < count; i++) {
     generateHuman(res);
@@ -67,7 +76,7 @@ void EM::swapStateToMovePNJEntities(float ratioToMove) {
   // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
-    if (a < ratioToMove && e->canHaveNewDestination()) {
+    if (a < ratioToMove && !e->playable && e->canHaveNewDestination()) {
       sf::Vector2f vec = random_pos_in_playable_area();
       cout << "New destination" << vec.x << "/" << vec.y << "\n";
       e->setDestination(vec);
@@ -79,27 +88,16 @@ void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
   // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
-    if (a < ratioToIdle) {
+    if (a < ratioToIdle && !e->playable) {
       e->toIdle();
     }
   }
 }
 
-void EM::movePNJEntities() {
+void EM::moveEntities() {
   for (auto &e : spawned_entities) {
-    e->moveToDestination();
+    e->move();
   }
 }
 
-void EM::movePlayers() {
-  for (auto &e : players) {
-    sf::Vector2i dir = getInputsKeyboard();
-    e.moveWithDir(dir);
-  }
-}
 
-void EM::generatePlayer(ressourceManager &res) {
-  player p{idNextEntity, random_pos_in_playable_area(), res};
-  ++idNextEntity;
-  players.emplace_back(p);
-}

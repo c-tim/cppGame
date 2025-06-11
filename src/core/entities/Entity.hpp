@@ -59,7 +59,7 @@ bool playable;
 
   sf::Vector2f getDirectionFromDestination();
 
-  void moveWithDir(sf::Vector2i dir);
+  void moveWithDir(sf::Vector2f dir);
 
   void setDestination(sf::Vector2f destination);
 
@@ -68,6 +68,8 @@ bool playable;
   bool isMoving();
 
   virtual void render(sf::RenderWindow& window) = 0;
+
+  virtual void move() = 0;
 
   // easier than operator<< but should fix issue later (TODO)
 };

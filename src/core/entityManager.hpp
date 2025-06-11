@@ -22,10 +22,8 @@ class entityManager {
   void swapStateToMovePNJEntities(float ratioToMove);
   void swapStateToIdlePNJEntities(float ratioToIdle);
 
-  void movePNJEntities();
+  void moveEntities();
   void renderEntities(sf::RenderWindow &window);
-
-  void movePlayers();
 
   void generatePlayer(ressourceManager &res);
   void generateHuman(ressourceManager &res);

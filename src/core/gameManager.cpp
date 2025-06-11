@@ -21,8 +21,7 @@ void gm::initialize_game() {
 void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJGameLoop);
   entity_manager.swapStateToIdlePNJEntities(GameDatas::ratioIdlePNJGameLoop);
-  entity_manager.movePNJEntities();
-  entity_manager.movePlayers();
+  entity_manager.moveEntities();
 
   entity_manager.renderEntities(window);
 }

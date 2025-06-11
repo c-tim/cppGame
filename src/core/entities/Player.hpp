@@ -19,4 +19,6 @@ class player : public Entity {
 
   void render(sf::RenderWindow& window) override;
 
+  void move() override ;
+
 };

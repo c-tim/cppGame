@@ -23,7 +23,7 @@ sf::Vector2i getInputsKeyboard(){
         dir.y -= 1;
     }
 
-    cout<< " Inputs : "<< dir.x<< " / "<< dir.y<<"\n";
+   // cout<< " Inputs : "<< dir.x<< " / "<< dir.y<<"\n";
     return dir;
 }
 
