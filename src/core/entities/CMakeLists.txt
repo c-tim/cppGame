@@ -14,12 +14,11 @@ add_library(
     animatedSprite.cpp
     ressourcesLoader.hpp
     ressourcesLoader.cpp
-    defaultVisitor.cpp
-    defaultVisitor.hpp
+
 )
 
 target_include_directories(entities PUBLIC ./)
 
 
 
-target_link_libraries(entities PUBLIC lib_core  pugixml sfml-graphics)
+target_link_libraries(entities PUBLIC lib_core visitor_lib pugixml sfml-graphics)

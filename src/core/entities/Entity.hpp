@@ -2,7 +2,7 @@
 
 // TODO make the pattern visitor work, circular dependence makes a lot of errors in the class that inherist Entity
 // I dont understand !!!
-//#include <defaultVisitor.hpp>
+#include <defaultVisitor.hpp>
 //#include <../core/behaviourVisitor/defaultVisitor.hpp>
 #include <myMain.h>
 
@@ -53,7 +53,7 @@ bool playable;
     state.toIdle(aSprite);
   }
 
- // virtual void accept(DeafaultVisitor &vis) = 0;
+  virtual void accept(defaultVisitor *vis) const = 0;
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables

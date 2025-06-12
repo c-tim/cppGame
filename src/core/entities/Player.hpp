@@ -24,6 +24,8 @@ class player : public Entity {
   void resetCooldownPlantCrop();
 
   void render(sf::RenderWindow& window) override;
+       void accept( defaultVisitor *vis) const override;
+
 
   void move() override ;
 

@@ -36,3 +36,10 @@ void getInputCrop(player &p) {
     }
   }
 }
+
+/*void checkIfHumanClicked(gameManager &gm){
+  /*if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+
+  }
+}
+*/

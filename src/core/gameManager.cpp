@@ -12,6 +12,7 @@ sf::Clock gameManager::clock;
 
 gameManager *gameManager::instance;
 
+
 void gm::initialize_game() {
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
   entity_manager.generatePlayer(res);
@@ -42,3 +43,8 @@ bool gameManager::newCropPlanted(sf::Vector2f pos) {
   instance->entity_manager.addCropPoseToQueue(pos);
   return true;
 }
+
+/*void gameManager::OnMouseClicked(sf::Vector2f mousePos){
+  //Check if a entity is contained in this 
+  //for(auto &e)
+}*/

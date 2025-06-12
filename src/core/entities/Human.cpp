@@ -11,3 +11,7 @@ void Human::render(sf::RenderWindow &window) {
 void Human::move() {
     moveToDestination();
 }
+
+void Human::accept(defaultVisitor *vis) const {
+  vis->visitHuman(this);
+}

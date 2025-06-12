@@ -28,6 +28,9 @@ class gameManager {
 
   static bool newCropPlanted(sf::Vector2f pos);
 
+  static bool OnMouseClicked(sf::Vector2f mousePos);
+
+
   void initialize_game();
   static int deltaTime();
   static void setDeltaTime();

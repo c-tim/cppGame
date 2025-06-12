@@ -10,10 +10,14 @@
 class crop : public Entity {
  private:
  public:
-  crop(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Crop", position, res.patateAnimations, 10, GameDatas::humanSpeed, false)  {
+ //TODO just why ?? patateAnimation is set exactly like humanAnimations, but it wont work, for now player plant dead human
+ //UPDATE maybe wrong animselection with an horrible offset
+  crop(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Crop", position, res.humanAnimations, 10, GameDatas::humanSpeed, false)  {
     //aSprite.setCurrentAnim(0);
     // aSprite.addAnimation("walkLeft", "walk", 30);
   }
+
+  void accept( defaultVisitor *vis) const override;
 
   void render( sf::RenderWindow &window) override;
 

@@ -35,4 +35,9 @@ void player::move(){
 
 
 
+  void player::accept(defaultVisitor *vis) const {
+  vis->visitPlayer(this);
+}
+
+
 

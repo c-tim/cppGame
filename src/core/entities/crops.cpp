@@ -20,3 +20,8 @@ void crop::move() {
   // moveToDestination();
   // No Move
 }
+
+void crop::accept(defaultVisitor *vis) const {
+  vis->visitCrop(this);
+}
+

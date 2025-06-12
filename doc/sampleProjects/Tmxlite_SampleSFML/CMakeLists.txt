@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 
 include(FetchContent)
-project(OutilVisualisation_CorrigeEtape6 VERSION 1.0.0 LANGUAGES CXX)
+project(Tmxlite_SampleSFML VERSION 1.0.0 LANGUAGES CXX)
 
 if(WIN32)
   # SonarLint support for CMake requires the following flag to be set on.
@@ -14,13 +14,17 @@ set (BUILD_SHARED_LIBS FALSE)
 FetchContent_Declare( sfml
   URL https://github.com/SFML/SFML/archive/refs/tags/3.0.1.tar.gz
 )
-option(SFML_BUILD_AUDIO "Build audio" ON)
-option(SFML_BUILD_NETWORK "Build network" ON)
+option(SFML_BUILD_AUDIO "Build audio" OFF)
+option(SFML_BUILD_NETWORK "Build network" OFF)
 FetchContent_MakeAvailable(sfml)
 
+FetchContent_Declare(
+    pugixml
+    URL https://github.com/zeux/pugixml/archive/refs/tags/v1.15.tar.gz
+)
+FetchContent_MakeAvailable(pugixml)
+
 set(CMAKE_CXX_STANDARD 23)
-
-
 
 #
 # Tmxlite : A simple FetchContent does not work We generate its library
@@ -53,22 +57,17 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/tmxlite-src/tmxlite
                  EXCLUDE_FROM_ALL)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/tmxlite-src/tmxlite/include")
 
-#----
-
-
-FetchContent_Declare( pugixml
-  URL https://github.com/zeux/pugixml/archive/refs/tags/v1.15.tar.gz
-)
-FetchContent_MakeAvailable(pugixml)
-
+#
+# Now, we can include subdirectoiries containing sources of our project
+#
 add_subdirectory(src/core)
 add_subdirectory(src/main)
-
 
 #
 # Include GoogleTest
 #
-FetchContent_Declare( googletest
+FetchContent_Declare(
+  googletest
   URL https://github.com/google/googletest/archive/refs/tags/v1.16.0.tar.gz
 )
 
@@ -76,23 +75,8 @@ FetchContent_Declare( googletest
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# enable_testing() must be in the source directory root (see cmake documentation at https://cmake.org/cmake/help/latest/command/enable_testing.html)
+# enable_testing() must be in the source directory root (see cmake documenation at https://cmake.org/cmake/help/latest/command/enable_testing.html)
 # Otherwise, Visual Studio test explorer does not see unit tests (See ticket https://developercommunity.visualstudio.com/t/No-tests-discovered-for-googletest-and-C/1148799#T-ND1150621)
 include(GoogleTest)
 enable_testing()
 add_subdirectory(src/test)
-
-FILE(COPY ressources DESTINATION "${CMAKE_BINARY_DIR}")
-
-FetchContent_Declare( imgui
-  URL https://github.com/ocornut/imgui/archive/refs/tags/v1.91.9.tar.gz
-)
-FetchContent_MakeAvailable(imgui)
-
-FetchContent_Declare( imgui-sfml
-  URL https://github.com/SFML/imgui-sfml/archive/refs/tags/v3.0.tar.gz
-)
-set(IMGUI_DIR ${imgui_SOURCE_DIR})
-option(IMGUI_SFML_FIND_SFML "Use find_package to find SFML" OFF)
-option(IMGUI_SFML_IMGUI_DEMO "Build imgui_demo.cpp" OFF)
-FetchContent_MakeAvailable(imgui-sfml)

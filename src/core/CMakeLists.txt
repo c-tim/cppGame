@@ -13,6 +13,7 @@ add_library(lib_core
 )
 
 add_subdirectory(entities)
+add_subdirectory(behaviourVisitor)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/behaviourVisitor)
 
