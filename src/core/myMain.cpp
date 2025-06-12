@@ -44,11 +44,11 @@ int myMain() {
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
-  sf::Texture testTexture("ressources/animation/walkLeft/walkL1.png");
-  sf::Sprite testSprite(testTexture);
+  /*sf::Texture testTexture("ressources/animation/walkLeft/walkL1.png");
+  sf::Sprite testSprite(testTexture);*/
 
-  animatedSprite testAnimated{10};
-  testAnimated.addAnimation("PatateCrops","patateCrops",8,10000);
+  /*animatedSprite testAnimated{10};
+  testAnimated.addAnimation("PatateCrops","patateCrops",8,10000);*/
 
   game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
@@ -93,7 +93,7 @@ int myMain() {
    // window.draw(testSprite);
    game_manager.applyGameLoopAndRender(window);
    //testAnimated.renderFrameOfAnimation(window, 0, temp_i);
-   testAnimated.renderNextTickAnimation(window);
+   //testAnimated.renderNextTickAnimation(window);
     window.display();
   }
 

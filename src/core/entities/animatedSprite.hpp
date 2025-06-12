@@ -17,18 +17,18 @@ class animatedSprite {
   sf::Texture timmy;
   sf::Sprite sprite;
 
-  int currentTickWaited = 0;  // increment when called by
-                              // renderNextTixkAnimation
   int currentFrame = 0;
-
+  
   float scale;
-
+  
   // a layer for the animt
   std::vector<struct animation> nullAnim;
-
+  
+  
+  public:
+  int currentTickWaited = 0;  // increment when called by
+                              // renderNextTixkAnimation
   void nextFrameAnim();
-
- public:
   std::vector<struct animation> &animations;
 
   int currentAnim = 0;
@@ -54,9 +54,9 @@ class animatedSprite {
   void initialize();
 
 
-  void renderNextTickAnimation(sf::RenderWindow &window);
+  void renderNextTickAnimation(sf::RenderWindow &window, bool canSkipFrame = true);
 
-  void renderNextTickAnimation(sf::RenderWindow &window, sf::Vector2f pos);
+  void renderNextTickAnimation(sf::RenderWindow &window, sf::Vector2f pos, bool canSkipFrame = true);
 
   void addAnimation(const std::string &path, const std::string &nameImage,
                     int numberImage, int speed = 1);

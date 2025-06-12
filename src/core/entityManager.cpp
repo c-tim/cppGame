@@ -89,7 +89,7 @@ void EM::swapStateToMovePNJEntities(float ratioToMove) {
     double a = (double)rand() / RAND_MAX;
     if (a < ratioToMove && !e->playable && e->canHaveNewDestination()) {
       sf::Vector2f vec = random_pos_in_playable_area();
-      cout << "New destination" << vec.x << "/" << vec.y << "\n";
+     // cout << "New destination" << vec.x << "/" << vec.y << "\n";
       e->setDestination(vec);
     }
   }

@@ -61,14 +61,17 @@ void animatedSprite::setCurrentAnim(int anim) {
   currentTickWaited = 0;
 }
 
-void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window) {
-  renderNextTickAnimation(window, sprite.getPosition());
+void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window, bool canSkipFrame) {
+  renderNextTickAnimation(window, sprite.getPosition(), canSkipFrame);
 }
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
-                                             sf::Vector2f pos) {
+                                             sf::Vector2f pos, bool canSkipFrame) {
   currentTickWaited += gameManager::deltaTime();
 
+
+
+  if(canSkipFrame){
   // We can skip frames if the game runs faster than the animSpeed, but we still
   // have to keep half frames at least
   for (int j = 0; j < (int)(animations[currentAnim].numberFrame / 4) - 1; j++) {
@@ -84,11 +87,17 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
       continue;
     }
   }
-
-  sprite.setTexture(animations[currentAnim].texture[currentFrame], true);
+}else{
+   if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
+        currentTickWaited) {
+      currentTickWaited =0;
+      nextFrameAnim();
+      cout << "set anim "<< currentFrame << "/"
+          << currentTickWaited << "...."<<currentAnim<<"\n";
+        }
+}
+  sprite.setTexture(animations[currentAnim].texture[currentFrame]);
   sprite.setPosition(pos);
-  // cout << "set to pos " << pos.x << " " << pos.y << currentFrame << "/"
-  //     << currentTickWaited << "\n";
   window.draw(sprite);
 }
 

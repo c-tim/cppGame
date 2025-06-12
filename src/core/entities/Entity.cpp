@@ -20,8 +20,8 @@ void Entity::setDestination(sf::Vector2f dest) {
   destination = dest;
   has_destination = true;
   // state.moveDirection(sf::Vector2f{0, 0}, aSprite);
-  cout << "ID : " << id << " : destination set " << destination.x << "/"
-       << destination.y << "\n";
+  //cout << "ID : " << id << " : destination set " << destination.x << "/"
+   //    << destination.y << "\n";
   state.isMoving(state.vecDirToDir(dest - feet_position));
 }
 
