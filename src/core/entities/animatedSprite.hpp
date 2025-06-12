@@ -21,6 +21,8 @@ class animatedSprite {
                               // renderNextTixkAnimation
   int currentFrame = 0;
 
+  float scale;
+
   // a layer for the animt
   std::vector<struct animation> nullAnim;
 
@@ -31,23 +33,28 @@ class animatedSprite {
 
   int currentAnim = 0;
 
-  animatedSprite(std::vector<struct animation> &anim)
+  animatedSprite(animatedSprite &CopyAnim)
       : timmy("ressources/animation/walkLeft/walkL1.png"),
         sprite(timmy),
-        animations{anim} {
-    sprite.setScale(sf::Vector2f(0.2, 0.2));
+        animations{CopyAnim.animations},
+        scale{CopyAnim.scale} {
+    sprite.setScale(sf::Vector2f(CopyAnim.scale, CopyAnim.scale));
   }
 
-  animatedSprite()
+  animatedSprite(float scale = 0.2f)
       : timmy("ressources/animation/walkLeft/walkL1.png"),
         sprite(timmy),
-        animations{nullAnim} {
-    sprite.setScale(sf::Vector2f(0.2, 0.2));
+        animations{nullAnim},
+        scale{scale} {
+    sprite.setScale(sf::Vector2f(scale, scale));
   }
 
   void setCurrentAnim(int anim);
 
   void initialize();
+
+
+  void renderNextTickAnimation(sf::RenderWindow &window);
 
   void renderNextTickAnimation(sf::RenderWindow &window, sf::Vector2f pos);
 

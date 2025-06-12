@@ -1,4 +1,5 @@
 #include <Human.hpp>
+#include <crops.hpp>
 #include <entityManager.hpp>
 #include <inputManager.hpp>
 #include <random>
@@ -37,8 +38,10 @@ void EM::generatePlayer(ressourceManager &res) {
   std::unique_ptr<player>  p = std::make_unique<player>(idNextEntity, random_pos_in_playable_area(), res);
   ++idNextEntity;
     cout << "spawned human : " << p->to_string() << "\n";
+  player *p_ptr = p.get();
 
   spawned_entities.push_back(std::move(p));
+  players.push_back(p_ptr);
 }
 
 
@@ -48,6 +51,14 @@ void EM::generateHumans(int count, ressourceManager &res) {
   }
 }
 
+
+void EM::generateCrop(ressourceManager &res, sf::Vector2f pos){
+  std::unique_ptr<crop>  p = std::make_unique<crop>(idNextEntity, pos, res);
+  ++idNextEntity;
+    cout << "spawned crop : " << p->to_string() << "\n";
+
+  spawned_entities.push_back(std::move(p));
+}
 void EM::addEntity(Entity *entity) { cout << "remove this"; }
 
 bool EM::compZOrderEntity(std::unique_ptr<Entity> &a,
@@ -67,9 +78,9 @@ void EM::renderEntities(sf::RenderWindow &window) {
     entity->render(window);
   }
 
-  for (auto &e : players) {
+ /*for (auto &e : players) {
     e.render(window);
-  }
+  }*/
 }
 
 void EM::swapStateToMovePNJEntities(float ratioToMove) {
@@ -95,9 +106,40 @@ void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
 }
 
 void EM::moveEntities() {
+  //TODO remove i (used for debuuger)
+  int i=0;
   for (auto &e : spawned_entities) {
     e->move();
+    i++;
   }
 }
+
+void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
+    crop_to_plant_queue.clear();
+
+//cout<<" qedd "<< players.size()<<"\n";
+    for (auto &e : players) {
+      player p = *e;
+    getInputCrop(p);
+  }
+
+  for(auto &pos : crop_to_plant_queue){
+    generateCrop(res, pos);
+  }
+
+}
+
+  void EM::addCropPoseToQueue(sf::Vector2f pos){
+    crop_to_plant_queue.push_back(pos);
+  }
+
+
+
+
+
+
+
+
+
 
 

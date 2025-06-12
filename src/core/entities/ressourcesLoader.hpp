@@ -8,6 +8,8 @@
 class ressourceManager {
  public:
   animatedSprite humanAnimations;
+  animatedSprite patateAnimations{100};
+
 
   void initializeRessourcesGame();
 

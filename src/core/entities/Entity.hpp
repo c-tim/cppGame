@@ -36,11 +36,11 @@ bool playable;
   bool has_destination = false;
 
   Entity(const int id, std::string const& type, sf::Vector2f position,
-         animatedSprite& templateAnimatedSprite, float speed = 1, bool isPlayable=false)
+         animatedSprite& templateAnimatedSprite, float scale ,float speed = 1, bool isPlayable=false)
       : id{id},
         type{type},
         feet_position{position},
-        aSprite{templateAnimatedSprite.animations},
+        aSprite{templateAnimatedSprite},
         speed{speed},
         playable{isPlayable} {
     state.toIdle(aSprite);

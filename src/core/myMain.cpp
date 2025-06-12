@@ -6,6 +6,7 @@
 #include <animatedSprite.hpp>
 #include <ressourcesLoader.hpp>
 
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -36,14 +37,18 @@ int myMain() {
   ressourceManager resManager;
   gameManager game_manager{resManager};
 
+  
+
+ // gameManager::instance = &game_manager;
+
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
   sf::Texture testTexture("ressources/animation/walkLeft/walkL1.png");
   sf::Sprite testSprite(testTexture);
 
-  animatedSprite testAnimated{};
-  testAnimated.addAnimation("walkLeft","walkL",33);
+  animatedSprite testAnimated{10};
+  testAnimated.addAnimation("PatateCrops","patateCrops",8,10000);
 
   game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
@@ -87,7 +92,8 @@ int myMain() {
     window.draw(shape);
    // window.draw(testSprite);
    game_manager.applyGameLoopAndRender(window);
-   testAnimated.renderFrameOfAnimation(window, 0, temp_i);
+   //testAnimated.renderFrameOfAnimation(window, 0, temp_i);
+   testAnimated.renderNextTickAnimation(window);
     window.display();
   }
 

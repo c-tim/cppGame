@@ -6,7 +6,7 @@
 
 // namespace for all unmodified datas
 namespace GameDatas {
-const int spawned_pnj = 15;
+const int spawned_pnj = 5;
 
 const std::vector<int> playableAreaX{10, 1500};
 const std::vector<int> playableAreaY{10, 1000};

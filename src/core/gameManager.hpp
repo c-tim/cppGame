@@ -1,23 +1,21 @@
 #pragma once
 #include <myMain.h>
-#include <entityManager.hpp>
-#include <inputManager.hpp>
 
 #include <Entity.hpp>
 #include <SFML/Graphics.hpp>
+#include <entityManager.hpp>
 #include <gameDatas.hpp>
+#include <inputManager.hpp>
 #include <iostream>
 #include <ressourcesLoader.hpp>
 #include <string>
+#include <gameEvents.hpp>
 
-//TODO for later
-enum class gameState {StartMenu=0, InGame=1, CantMove=2};
+// TODO for later
+enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 };
 
 class gameManager {
  private:
-
-
-
   entityManager entity_manager;
   ressourceManager &res;
 
@@ -25,8 +23,10 @@ class gameManager {
   static sf::Time deltaTime_calculated;
   static sf::Clock clock;
 
-
  public:
+  static gameManager *instance;
+
+  static bool newCropPlanted(sf::Vector2f pos);
 
   void initialize_game();
   static int deltaTime();
@@ -34,7 +34,9 @@ class gameManager {
   static void callInputEvent();
   void applyGameLoopAndRender(sf::RenderWindow &window);
   gameManager(ressourceManager &instance_res) : res{instance_res} {
-
-gameManager::clock.start();
+    //gameEvent::setInstance(&this);
+    //gameEvent::instance = this;
+    instance = this;
+    gameManager::clock.start();
   }
 };

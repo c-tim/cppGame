@@ -43,8 +43,6 @@ void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
   window.draw(sprite);
 }
 
-
-
 void animatedSprite::setCurrentAnim(int anim) {
   // redundant with above method but necessary in order to abort in case of
   // error
@@ -54,19 +52,21 @@ void animatedSprite::setCurrentAnim(int anim) {
     return;
   }
 
-  if(anim==currentAnim){
+  if (anim == currentAnim) {
     return;
   }
 
   currentAnim = anim;
   currentFrame = 0;
-  currentTickWaited =0;
+  currentTickWaited = 0;
+}
+
+void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window) {
+  renderNextTickAnimation(window, sprite.getPosition());
 }
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos) {
-
-        
   currentTickWaited += gameManager::deltaTime();
 
   // We can skip frames if the game runs faster than the animSpeed, but we still

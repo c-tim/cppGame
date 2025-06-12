@@ -10,18 +10,20 @@ using std::cout;
 sf::Time gameManager::deltaTime_calculated;
 sf::Clock gameManager::clock;
 
+gameManager *gameManager::instance;
+
 void gm::initialize_game() {
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
   entity_manager.generatePlayer(res);
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJStart);
 }
 
-
-
 void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJGameLoop);
   entity_manager.swapStateToIdlePNJEntities(GameDatas::ratioIdlePNJGameLoop);
   entity_manager.moveEntities();
+
+  entity_manager.checkInputOtherActionsPlayers(res);
 
   entity_manager.renderEntities(window);
 }
@@ -32,6 +34,11 @@ void gameManager::setDeltaTime() {
   deltaTime_calculated = gameManager::clock.restart();
 }
 
-void gameManager::callInputEvent(){
-  getInputsKeyboard();
+void gameManager::callInputEvent() {
+  // getInputsKeyboard();
+}
+
+bool gameManager::newCropPlanted(sf::Vector2f pos) {
+  instance->entity_manager.addCropPoseToQueue(pos);
+  return true;
 }

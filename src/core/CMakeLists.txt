@@ -4,6 +4,8 @@ add_library(lib_core
       gameManager.cpp
       gameManager.hpp
       gameDatas.hpp
+      gameEvents.cpp
+      gameEvents.hpp
       inputManager.cpp
       inputManager.hpp
       myMain.cpp

@@ -6,6 +6,8 @@ add_library(
     Human.cpp
     Player.cpp
     Player.hpp
+    crops.cpp
+    crops.hpp
     entityState.hpp
     entityState.cpp
     animatedSprite.hpp

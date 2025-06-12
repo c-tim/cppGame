@@ -12,10 +12,18 @@ class entityManager {
   int idNextEntity = 0;
 
   std::vector<std::unique_ptr<Entity>> spawned_entities;
-  std::vector<player> players;
+
+  // TODO maybe bad practice but I dont know alternative to access unique
+  // behaviour from player
+  //  and have them in a sortable list with entities for zorder
+  std::vector<player *> players;
+
+  //store the pos of the planted_crops so that it wont affect list of pointer spawned_entities during sensitive access
+    std::vector<sf::Vector2f> crop_to_plant_queue;
+
 
   static bool compZOrderEntity(std::unique_ptr<Entity> &a,
-                          std::unique_ptr<Entity> &b);
+                               std::unique_ptr<Entity> &b);
   void sortEntityByZOrder(std::vector<std::unique_ptr<Entity>> &list_entities);
 
  public:
@@ -25,8 +33,13 @@ class entityManager {
   void moveEntities();
   void renderEntities(sf::RenderWindow &window);
 
+  void checkInputOtherActionsPlayers(ressourceManager &res);
+  void addCropPoseToQueue(sf::Vector2f pos);
+
   void generatePlayer(ressourceManager &res);
   void generateHuman(ressourceManager &res);
   void generateHumans(int count, ressourceManager &res);
+  void generateCrop(ressourceManager &res, sf::Vector2f pos);
+
   void addEntity(Entity *entity);
 };

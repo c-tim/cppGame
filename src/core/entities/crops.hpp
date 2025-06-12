@@ -7,15 +7,15 @@
 #include "Entity.hpp"
 #include <gameDatas.hpp>
 
-class Human : public Entity {
+class crop : public Entity {
  private:
  public:
-  Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, 0.2,GameDatas::humanSpeed)  {
-    //aSprite = res.humanAnimations;
+  crop(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Crop", position, res.patateAnimations, 10, GameDatas::humanSpeed, false)  {
+    aSprite.setCurrentAnim(0);
     // aSprite.addAnimation("walkLeft", "walk", 30);
   }
 
   void render( sf::RenderWindow &window) override;
 
   void move() override;
-};
+}; 
