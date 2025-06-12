@@ -4,8 +4,11 @@
 #include <ostream>
 #include <ressourcesLoader.hpp>
 
+
 #include "Entity.hpp"
 #include <gameDatas.hpp>
+
+
 
 class Human : public Entity {
  private:

@@ -1,4 +1,9 @@
 #pragma once
+
+// TODO make the pattern visitor work, circular dependence makes a lot of errors in the class that inherist Entity
+// I dont understand !!!
+//#include <defaultVisitor.hpp>
+//#include <../core/behaviourVisitor/defaultVisitor.hpp>
 #include <myMain.h>
 
 #include <SFML/Graphics.hpp>
@@ -6,6 +11,8 @@
 #include <entityState.hpp>
 #include <iostream>
 #include <string>
+
+class DeafaultVisitor;
 
 class Entity {
  protected:
@@ -45,6 +52,8 @@ bool playable;
         playable{isPlayable} {
     state.toIdle(aSprite);
   }
+
+ // virtual void accept(DeafaultVisitor &vis) = 0;
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables

@@ -14,6 +14,10 @@ add_library(lib_core
 
 add_subdirectory(entities)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/behaviourVisitor)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/entities)
+
 target_include_directories(lib_core PUBLIC ./)
 target_link_libraries(lib_core PUBLIC entities pugixml sfml-graphics sfml-window)
 target_link_libraries(lib_core PRIVATE ImGui-SFML::ImGui-SFML)
