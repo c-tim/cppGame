@@ -4,6 +4,8 @@
 #include <gameManager.hpp>
 #include <ostream>
 
+
+
 using std::cout;
 
 /*std::ostream& Entity::operator<<(std::ostream& os){

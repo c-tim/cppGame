@@ -48,3 +48,7 @@ bool gameManager::newCropPlanted(sf::Vector2f pos) {
   //Check if a entity is contained in this 
   //for(auto &e)
 }*/
+
+  void gameManager::callEntityManagerFaitLAppel(){
+    entity_manager.faitLAppel();
+  }

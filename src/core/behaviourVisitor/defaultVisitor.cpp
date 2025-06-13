@@ -2,8 +2,8 @@
 #include <Entity.hpp>
 
 
-void defaultVisitor::performBehaviourWithListEntities(std::vector<std::unique_ptr<Entity>> list){
-  for(auto &e: list){
+void defaultVisitor::performBehaviourWithListEntities(std::vector<std::unique_ptr<Entity>> *list){
+  for(auto const &e: *list){
     e->accept(this);
   }
 }

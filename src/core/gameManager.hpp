@@ -31,6 +31,8 @@ class gameManager {
   static bool OnMouseClicked(sf::Vector2f mousePos);
 
 
+  void callEntityManagerFaitLAppel();
+
   void initialize_game();
   static int deltaTime();
   static void setDeltaTime();

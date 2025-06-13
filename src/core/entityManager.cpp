@@ -1,6 +1,7 @@
+#include <entityManager.hpp>
+#include <coucouVisitor.hpp>
 #include <Human.hpp>
 #include <crops.hpp>
-#include <entityManager.hpp>
 #include <inputManager.hpp>
 #include <random>
 
@@ -134,6 +135,9 @@ void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
   }
 
 
+  void EM::faitLAppel(){
+      coucouVisitor appel{&spawned_entities};
+  }
 
 
 

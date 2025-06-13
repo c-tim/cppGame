@@ -4,6 +4,7 @@
 #include <ostream>
 #include <ressourcesLoader.hpp>
 
+#include <defaultVisitor.hpp>
 #include "Entity.hpp"
 #include <gameDatas.hpp>
 

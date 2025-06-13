@@ -5,6 +5,8 @@
 #include <gameDatas.hpp>
 #include <animatedSprite.hpp>
 #include <ressourcesLoader.hpp>
+//#include <spriteClickedVisitor.hpp>
+#include <coucouVisitor.hpp>
 
 
 #include <SFML/Graphics.hpp>
@@ -52,7 +54,7 @@ int myMain() {
 
   game_manager.initialize_game(); //TODO merge all behaviours for lisibility
 
-  
+  game_manager.callEntityManagerFaitLAppel();
 
   //instance_game_manager.generatePNJs
 

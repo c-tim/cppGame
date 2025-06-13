@@ -13,6 +13,8 @@
 #include <string>
 
 class DeafaultVisitor;
+//class defaultVisitor; 
+
 
 class Entity {
  protected:

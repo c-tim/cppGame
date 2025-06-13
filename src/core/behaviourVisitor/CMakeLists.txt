@@ -2,6 +2,10 @@ add_library(
     visitor_lib
     defaultVisitor.cpp
     defaultVisitor.hpp
+    spriteClickedVisitor.cpp
+    spriteClickedVisitor.hpp
+    coucouVisitor.cpp
+    coucouVisitor.hpp
 )
 
 target_include_directories(visitor_lib PUBLIC ./)

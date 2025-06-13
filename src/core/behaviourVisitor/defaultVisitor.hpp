@@ -1,4 +1,9 @@
 #pragma once
+/*#include <Entity.hpp>
+#include <Human.hpp>
+#include <Player.hpp>
+#include <crops.hpp>*/
+
 #include <vector>
 #include <memory>
 
@@ -24,7 +29,7 @@ public:
   virtual void visitCrop( const crop *element) const = 0;
 
 
-  void performBehaviourWithListEntities(std::vector<std::unique_ptr<Entity>> list)  ;
+  void performBehaviourWithListEntities(std::vector<std::unique_ptr<Entity>> *list)  ;
 
 };
 

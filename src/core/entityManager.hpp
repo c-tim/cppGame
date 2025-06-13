@@ -42,4 +42,6 @@ class entityManager {
   void generateCrop(ressourceManager &res, sf::Vector2f pos);
 
   void addEntity(Entity *entity);
+
+  void faitLAppel();
 };

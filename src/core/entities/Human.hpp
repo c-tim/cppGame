@@ -1,5 +1,5 @@
 #pragma once
-
+#include <defaultVisitor.hpp>
 #include <animatedSprite.hpp>
 #include <ostream>
 #include <ressourcesLoader.hpp>

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <defaultVisitor.hpp>
 #include <animatedSprite.hpp>
 #include <gameDatas.hpp>
 #include <ostream>
