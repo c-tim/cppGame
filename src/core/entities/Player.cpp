@@ -22,7 +22,7 @@ void player::checkForBoundaries(){
     if(feet_position.y <= GameDatas::playableAreaY[0]){
     feet_position.y = GameDatas::playableAreaY[0] + offet;
   }
-    if(feet_position.y <= GameDatas::playableAreaY[1]){
+    if(feet_position.y >= GameDatas::playableAreaY[1]){
     feet_position.y = GameDatas::playableAreaY[1]- offet;
   }
 
