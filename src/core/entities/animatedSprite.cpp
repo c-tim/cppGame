@@ -61,42 +61,44 @@ void animatedSprite::setCurrentAnim(int anim) {
   currentTickWaited = 0;
 }
 
-void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window, bool canSkipFrame) {
+void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
+                                             bool canSkipFrame) {
   renderNextTickAnimation(window, sprite.getPosition(), canSkipFrame);
 }
 
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
-                                             sf::Vector2f pos, bool canSkipFrame) {
+                                             sf::Vector2f pos,
+                                             bool canSkipFrame) {
   currentTickWaited += gameManager::deltaTime();
 
-
-
-  if(canSkipFrame){
-  // We can skip frames if the game runs faster than the animSpeed, but we still
-  // have to keep half frames at least
-  for (int j = 0; j < (int)(animations[currentAnim].numberFrame / 4) - 1; j++) {
+  if (canSkipFrame) {
+    // We can skip frames if the game runs faster than the animSpeed, but we
+    // still have to keep half frames at least
+    for (int j = 0; j < (int)(animations[currentAnim].numberFrame / 4) - 1;
+         j++) {
+      if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
+          currentTickWaited) {
+        currentTickWaited -=
+            animatedSprite::animations[currentAnim].ticksBetweenFrame;
+        if (currentTickWaited < 0) {
+          currentTickWaited = 0;
+        }
+        nextFrameAnim();
+      } else {
+        continue;
+      }
+    }
+  } else {
     if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
         currentTickWaited) {
-      currentTickWaited -=
-          animatedSprite::animations[currentAnim].ticksBetweenFrame;
-      if (currentTickWaited < 0) {
-        currentTickWaited = 0;
-      }
+      currentTickWaited = 0;
       nextFrameAnim();
-    } else {
-      continue;
+      cout << "set anim " << currentFrame << "/" << currentTickWaited << "...."
+           << currentAnim << "\n";
     }
   }
-}else{
-   if (animatedSprite::animations[currentAnim].ticksBetweenFrame <=
-        currentTickWaited) {
-      currentTickWaited =0;
-      nextFrameAnim();
-      cout << "set anim "<< currentFrame << "/"
-          << currentTickWaited << "...."<<currentAnim<<"\n";
-        }
-}
-  sprite.setTexture(animations[currentAnim].texture[currentFrame]);
+  //sprite.setTexture(animations[currentAnim].texture[currentFrame]);
+  setTexture(animations[currentAnim].texture[currentFrame]);
   sprite.setPosition(pos);
   window.draw(sprite);
 }
@@ -111,4 +113,13 @@ void animatedSprite::nextFrameAnim() {
 }
 
 void animatedSprite::initialize() {  // addAnimation("walkLeft", "walkL", 30);
+}
+
+sf::Sprite animatedSprite::getSprite() const { return sprite; }
+
+void animatedSprite::setTexture(sf::Texture &t)
+{
+  sprite.setTexture(t);
+  sf::Vector2f centerTexture{t.getSize().x/2, t.getSize().y/2};
+  sprite.setOrigin(centerTexture);
 }

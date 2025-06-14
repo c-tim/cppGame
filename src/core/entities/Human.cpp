@@ -15,3 +15,7 @@ void Human::move() {
 void Human::accept(defaultVisitor *vis) const {
   vis->visitHuman(this);
 }
+
+void Human::setPicked(bool picked){
+  isPicked = picked;
+}

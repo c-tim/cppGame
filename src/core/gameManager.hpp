@@ -17,18 +17,29 @@ enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 };
 class gameManager {
  private:
   entityManager entity_manager;
-  ressourceManager &res;
+  ressourceManager res;
 
   // static sf::Time last_calculated_time;
   static sf::Time deltaTime_calculated;
   static sf::Clock clock;
 
+  int numberHiders = 1;
+  int currentHidersBusted = 0;
+
  public:
+ void newPlayerBusted();
+
+  gameState currentGameState = gameState::InGame;
+
   static gameManager *instance;
+
+
 
   static bool newCropPlanted(sf::Vector2f pos);
 
-  static bool OnMouseClicked(sf::Vector2f mousePos);
+  static void OnMouseClicked(sf::Vector2f mousePos);
+
+    static void movePlayerSelected(sf::Vector2f mousePos);
 
 
   void callEntityManagerFaitLAppel();
@@ -38,7 +49,8 @@ class gameManager {
   static void setDeltaTime();
   static void callInputEvent();
   void applyGameLoopAndRender(sf::RenderWindow &window);
-  gameManager(ressourceManager &instance_res) : res{instance_res} {
+  gameManager() {
+
     //gameEvent::setInstance(&this);
     //gameEvent::instance = this;
     instance = this;

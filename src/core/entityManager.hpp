@@ -6,6 +6,10 @@
 #include <gameDatas.hpp>
 #include <iostream>
 #include <ressourcesLoader.hpp>
+#include <spriteClickedVisitor.hpp>
+
+
+sf::Vector2f random_pos_in_playable_area();
 
 class entityManager {
  private:
@@ -18,15 +22,18 @@ class entityManager {
   //  and have them in a sortable list with entities for zorder
   std::vector<player *> players;
 
-  //store the pos of the planted_crops so that it wont affect list of pointer spawned_entities during sensitive access
-    std::vector<sf::Vector2f> crop_to_plant_queue;
-
+  // store the pos of the planted_crops so that it wont affect list of pointer
+  // spawned_entities during sensitive access
+  std::vector<sf::Vector2f> crop_to_plant_queue;
 
   static bool compZOrderEntity(std::unique_ptr<Entity> &a,
                                std::unique_ptr<Entity> &b);
   void sortEntityByZOrder(std::vector<std::unique_ptr<Entity>> &list_entities);
+  spriteClickedVisitor sprite_clicked_visitor;
 
  public:
+  Entity *currentEntitySelected = nullptr;
+
   void swapStateToMovePNJEntities(float ratioToMove);
   void swapStateToIdlePNJEntities(float ratioToIdle);
 
@@ -44,4 +51,7 @@ class entityManager {
   void addEntity(Entity *entity);
 
   void faitLAppel();
+
+  void moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos);
+  void moveSelectedPlayerToMouse(sf::Vector2f mousePos);
 };

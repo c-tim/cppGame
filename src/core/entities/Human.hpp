@@ -12,6 +12,7 @@
 
 class Human : public Entity {
  private:
+ bool isPicked = false;
  public:
   Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, 0.2,GameDatas::humanSpeed)  {
     //aSprite = res.humanAnimations;
@@ -23,4 +24,6 @@ class Human : public Entity {
 
 
   void move() override;
+
+  void setPicked(bool picked);
 };

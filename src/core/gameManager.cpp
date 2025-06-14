@@ -1,5 +1,6 @@
 #include <Human.hpp>
 #include <gameManager.hpp>
+#include <inputManager.hpp>
 #include <iostream>
 
 using std::cout;
@@ -14,9 +15,11 @@ gameManager *gameManager::instance;
 
 
 void gm::initialize_game() {
+  currentGameState = gameState::InGame;
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
   entity_manager.generatePlayer(res);
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJStart);
+
 }
 
 void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
@@ -26,6 +29,7 @@ void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
 
   entity_manager.checkInputOtherActionsPlayers(res);
 
+  checkIfHumanClicked(window);
   entity_manager.renderEntities(window);
 }
 
@@ -44,11 +48,17 @@ bool gameManager::newCropPlanted(sf::Vector2f pos) {
   return true;
 }
 
-/*void gameManager::OnMouseClicked(sf::Vector2f mousePos){
-  //Check if a entity is contained in this 
-  //for(auto &e)
-}*/
+void gameManager::OnMouseClicked(sf::Vector2f mousePos){
+  instance->entity_manager.moveSelectedEntityOrUnSelectIt(mousePos);
+}
+
+     void gameManager::movePlayerSelected(sf::Vector2f mousePos){
+      instance->entity_manager.moveSelectedPlayerToMouse(mousePos);
+     }
+
 
   void gameManager::callEntityManagerFaitLAppel(){
     entity_manager.faitLAppel();
   }
+
+

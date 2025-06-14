@@ -11,7 +11,9 @@ class player : public Entity {
  private:
  int cooldown_plant_crop = 10000;
  int tick_since_last_plant_crop = 0;
+ bool isPicked = false;
 
+ void checkForBoundaries();
  public:
   player(int id, sf::Vector2f position, ressourceManager& res)
       : Entity(id, "player", position, res.humanAnimations, 0.2,
@@ -28,5 +30,8 @@ class player : public Entity {
 
 
   void move() override ;
+  void setPicked(bool picked);
+
+
 
 };

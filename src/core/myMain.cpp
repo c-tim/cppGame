@@ -36,8 +36,8 @@ int myMain() {
   window.setFramerateLimit(30);
   
 
-  ressourceManager resManager;
-  gameManager game_manager{resManager};
+
+  gameManager game_manager{};
 
   
 
@@ -60,7 +60,7 @@ int myMain() {
 
 
   int temp_i = 0;
-  while (window.isOpen()) {
+  while (window.isOpen() && game_manager.currentGameState == gameState::InGame) {
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>()) window.close();
 

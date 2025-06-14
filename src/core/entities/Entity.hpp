@@ -1,9 +1,9 @@
 #pragma once
 
-// TODO make the pattern visitor work, circular dependence makes a lot of errors in the class that inherist Entity
-// I dont understand !!!
+// TODO make the pattern visitor work, circular dependence makes a lot of errors
+// in the class that inherist Entity I dont understand !!!
 #include <defaultVisitor.hpp>
-//#include <../core/behaviourVisitor/defaultVisitor.hpp>
+// #include <../core/behaviourVisitor/defaultVisitor.hpp>
 #include <myMain.h>
 
 #include <SFML/Graphics.hpp>
@@ -13,8 +13,7 @@
 #include <string>
 
 class DeafaultVisitor;
-//class defaultVisitor; 
-
+// class defaultVisitor;
 
 class Entity {
  protected:
@@ -23,39 +22,42 @@ class Entity {
   const int id;
   const std::string type;
 
-  entityState state;
-
+  
   animatedSprite aSprite;
-
+  
   /// @brief the position at the feet of the entity (natural position)
   sf::Vector2f feet_position;
-
+  
   sf::Vector2f destination;
-
+  
   // TODO add Texture displayed and methods to get the position rendered with
   // the feet_position
-
- public:
-bool playable;
-  virtual ~Entity() { };
+  
+  public:
+  entityState state;
+  bool playable;
+  virtual ~Entity() {};
   sf::Vector2f getPosition();
+
+  void setPosition(sf::Vector2f pos);
 
   bool canHaveNewDestination();
 
   bool has_destination = false;
 
   Entity(const int id, std::string const& type, sf::Vector2f position,
-         animatedSprite& templateAnimatedSprite, float scale ,float speed = 1, bool isPlayable=false)
+         animatedSprite& templateAnimatedSprite, float scale, float speed = 1,
+         bool isPlayable = false)
       : id{id},
         type{type},
         feet_position{position},
         aSprite{templateAnimatedSprite},
         speed{speed},
         playable{isPlayable} {
-    state.toIdle(aSprite);
+    state.toIdle();
   }
 
-  virtual void accept(defaultVisitor *vis) const = 0;
+  virtual void accept(defaultVisitor* vis) const = 0;
 
   // TODO not quite understood what exactly this do but prevent copy const
   // variables
@@ -81,6 +83,8 @@ bool playable;
   virtual void render(sf::RenderWindow& window) = 0;
 
   virtual void move() = 0;
+
+  bool isSpriteInBoundOfPos(sf::Vector2f pos) const;
 
   // easier than operator<< but should fix issue later (TODO)
 };

@@ -1,7 +1,7 @@
-#include <entityManager.hpp>
-#include <coucouVisitor.hpp>
 #include <Human.hpp>
+#include <coucouVisitor.hpp>
 #include <crops.hpp>
+#include <entityManager.hpp>
 #include <inputManager.hpp>
 #include <random>
 
@@ -36,15 +36,15 @@ void EM::generateHuman(ressourceManager &res) {
 }
 
 void EM::generatePlayer(ressourceManager &res) {
-  std::unique_ptr<player>  p = std::make_unique<player>(idNextEntity, random_pos_in_playable_area(), res);
+  std::unique_ptr<player> p = std::make_unique<player>(
+      idNextEntity, random_pos_in_playable_area(), res);
   ++idNextEntity;
-    cout << "spawned human : " << p->to_string() << "\n";
+  cout << "spawned human : " << p->to_string() << "\n";
   player *p_ptr = p.get();
 
   spawned_entities.push_back(std::move(p));
   players.push_back(p_ptr);
 }
-
 
 void EM::generateHumans(int count, ressourceManager &res) {
   for (int i = 0; i < count; i++) {
@@ -52,11 +52,10 @@ void EM::generateHumans(int count, ressourceManager &res) {
   }
 }
 
-
-void EM::generateCrop(ressourceManager &res, sf::Vector2f pos){
-  std::unique_ptr<crop>  p = std::make_unique<crop>(idNextEntity, pos, res);
+void EM::generateCrop(ressourceManager &res, sf::Vector2f pos) {
+  std::unique_ptr<crop> p = std::make_unique<crop>(idNextEntity, pos, res);
   ++idNextEntity;
-    cout << "spawned crop : " << p->to_string() << "\n";
+  cout << "spawned crop : " << p->to_string() << "\n";
 
   spawned_entities.push_back(std::move(p));
 }
@@ -79,9 +78,9 @@ void EM::renderEntities(sf::RenderWindow &window) {
     entity->render(window);
   }
 
- /*for (auto &e : players) {
-    e.render(window);
-  }*/
+  /*for (auto &e : players) {
+     e.render(window);
+   }*/
 }
 
 void EM::swapStateToMovePNJEntities(float ratioToMove) {
@@ -90,7 +89,7 @@ void EM::swapStateToMovePNJEntities(float ratioToMove) {
     double a = (double)rand() / RAND_MAX;
     if (a < ratioToMove && !e->playable && e->canHaveNewDestination()) {
       sf::Vector2f vec = random_pos_in_playable_area();
-     // cout << "New destination" << vec.x << "/" << vec.y << "\n";
+      // cout << "New destination" << vec.x << "/" << vec.y << "\n";
       e->setDestination(vec);
     }
   }
@@ -107,8 +106,8 @@ void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
 }
 
 void EM::moveEntities() {
-  //TODO remove i (used for debuuger)
-  int i=0;
+  // TODO remove i (used for debuuger)
+  int i = 0;
   for (auto &e : spawned_entities) {
     e->move();
     i++;
@@ -116,34 +115,44 @@ void EM::moveEntities() {
 }
 
 void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
-    crop_to_plant_queue.clear();
+  crop_to_plant_queue.clear();
 
-//cout<<" qedd "<< players.size()<<"\n";
-    for (auto &e : players) {
-      player p = *e;
+  // cout<<" qedd "<< players.size()<<"\n";
+  for (auto &e : players) {
+    player p = *e;
     getInputCrop(p);
   }
 
-  for(auto &pos : crop_to_plant_queue){
+  for (auto &pos : crop_to_plant_queue) {
     generateCrop(res, pos);
   }
-
 }
 
-  void EM::addCropPoseToQueue(sf::Vector2f pos){
-    crop_to_plant_queue.push_back(pos);
+void EM::addCropPoseToQueue(sf::Vector2f pos) {
+  crop_to_plant_queue.push_back(pos);
+}
+
+void EM::faitLAppel() { coucouVisitor appel{&spawned_entities}; }
+
+void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
+  //Soit une entité a deja ete selectionne avant et le click la deselectionne
+  if (currentEntitySelected != nullptr) {
+    cout << "gotacha\n";
+    currentEntitySelected->setPosition((sf::Vector2f)mousePos);
+    currentEntitySelected = nullptr;
   }
-
-
-  void EM::faitLAppel(){
-      coucouVisitor appel{&spawned_entities};
+  //soit on regarde si une nouvelle entite est selectionnée 
+  else {
+    sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
+    currentEntitySelected = sprite_clicked_visitor.testIfPickableEntitySelected(
+        currentEntitySelected, &spawned_entities);
   }
+}
 
-
-
-
-
-
-
-
-
+void EM::moveSelectedPlayerToMouse(sf::Vector2f mousePos) {
+  if (currentEntitySelected != nullptr) {
+    cout << "gotacha\n";
+    currentEntitySelected->setPosition((sf::Vector2f)mousePos);
+    
+  }
+}

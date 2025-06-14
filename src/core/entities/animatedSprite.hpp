@@ -18,14 +18,13 @@ class animatedSprite {
   sf::Sprite sprite;
 
   int currentFrame = 0;
-  
+
   float scale;
-  
+
   // a layer for the animt
   std::vector<struct animation> nullAnim;
-  
-  
-  public:
+
+ public:
   int currentTickWaited = 0;  // increment when called by
                               // renderNextTixkAnimation
   void nextFrameAnim();
@@ -53,10 +52,11 @@ class animatedSprite {
 
   void initialize();
 
+  void renderNextTickAnimation(sf::RenderWindow &window,
+                               bool canSkipFrame = true);
 
-  void renderNextTickAnimation(sf::RenderWindow &window, bool canSkipFrame = true);
-
-  void renderNextTickAnimation(sf::RenderWindow &window, sf::Vector2f pos, bool canSkipFrame = true);
+  void renderNextTickAnimation(sf::RenderWindow &window, sf::Vector2f pos,
+                               bool canSkipFrame = true);
 
   void addAnimation(const std::string &path, const std::string &nameImage,
                     int numberImage, int speed = 1);
@@ -64,4 +64,8 @@ class animatedSprite {
   // used to debug animantion
   void renderFrameOfAnimation(sf::RenderWindow &window, int animation,
                               int frame);
+
+  sf::Sprite getSprite() const;
+
+  void setTexture(sf::Texture &t);
 };

@@ -11,6 +11,23 @@ void player::render( sf::RenderWindow &window) {
     
 };
 
+void player::checkForBoundaries(){
+  float offet = 0.1;
+  if(feet_position.x <= GameDatas::playableAreaX[0]){
+    feet_position.x = GameDatas::playableAreaX[0] + offet;
+  }
+    if(feet_position.x >= GameDatas::playableAreaX[1]){
+    feet_position.x = GameDatas::playableAreaX[1]-offet;
+  }
+    if(feet_position.y <= GameDatas::playableAreaY[0]){
+    feet_position.y = GameDatas::playableAreaY[0] + offet;
+  }
+    if(feet_position.y <= GameDatas::playableAreaY[1]){
+    feet_position.y = GameDatas::playableAreaY[1]- offet;
+  }
+
+
+}
 
 void player::move(){
     sf::Vector2i dir = getInputsKeyboard();
@@ -18,6 +35,7 @@ void player::move(){
       toIdle();
     }else{
       moveWithDir((sf::Vector2f)dir);
+      checkForBoundaries();
     }
 }
 
@@ -39,5 +57,9 @@ void player::move(){
   vis->visitPlayer(this);
 }
 
+
+void player::setPicked(bool picked){
+  isPicked = picked;
+}
 
 

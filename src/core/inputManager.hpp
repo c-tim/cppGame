@@ -6,4 +6,4 @@ sf::Vector2i getInputsKeyboard();
 
 void getInputCrop(player &p);
 
-//void checkIfHumanClicked(gameManager &gm);
+void checkIfHumanClicked(sf::RenderWindow &window);

@@ -37,9 +37,33 @@ void getInputCrop(player &p) {
   }
 }
 
-/*void checkIfHumanClicked(gameManager &gm){
-  /*if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)){
+void checkIfHumanClicked(sf::RenderWindow &window) {
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+    // sf::Vector2f pos = sf::Mouse::getPosition();
+    gameManager::OnMouseClicked(
+        window.mapPixelToCoords(sf::Mouse::getPosition()));
+    sf::CircleShape shape(15.F);
+    shape.setFillColor(sf::Color::Red);
+    shape.setPosition(window.mapPixelToCoords(sf::Mouse::getPosition()));
+    sf::CircleShape shape2(15.F);
+    shape2.setFillColor(sf::Color::Blue);
+    shape2.setPosition((sf::Vector2f)sf::Mouse::getPosition());
+    window.draw(shape);
+    window.draw(shape2);
+  } else {
+    sf::CircleShape shape(15.F);
+    shape.setFillColor(sf::Color::Magenta);
 
+    gameManager::movePlayerSelected(
+    window.mapPixelToCoords(sf::Mouse::getPosition()));
+    shape.setPosition(window.mapPixelToCoords(sf::Mouse::getPosition()));
+    window.draw(shape);
   }
 }
-*/
+
+void gameManager::newPlayerBusted() {
+  currentHidersBusted++;
+  if (currentHidersBusted >= numberHiders) {
+    currentGameState = gameState::CantMove;
+  }
+}
