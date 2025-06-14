@@ -1,3 +1,4 @@
+#include <gameManager.hpp>
 #include <ressourcesLoader.hpp>
 
 void ressourceManager::initializeRessourcesGame() {
@@ -35,4 +36,12 @@ void ressourceManager::initializeRessourcesGame() {
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
 
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
+}
+
+void ressourceManager::renderTilemap(sf::RenderWindow &window) {
+  // TODO very uneffective to create each time but maplayer have to be
+  // initialized and i need to get the map so i keep this for the moment
+  MapLayer layerZero(map, 0, 5);
+  layerZero.update(gameManager::deltaTime());
+  window.draw(layerZero);
 }

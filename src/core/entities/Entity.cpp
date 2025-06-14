@@ -105,7 +105,7 @@ void Entity::moveWithDir(sf::Vector2f direction) {
                                 destination));
 
   // speed adapted to the tick speed
-  float stepToMove = speed * gameManager::deltaTime();
+  float stepToMove = speed * gameManager::deltaTimeMilli();
 
   // if the entity will move further than necessary, we reduce the step
   if (distanceToDestinationProjectedOnAxis <= stepToMove) {

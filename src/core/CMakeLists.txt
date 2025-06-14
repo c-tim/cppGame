@@ -8,6 +8,7 @@ add_library(lib_core
       gameEvents.hpp
       inputManager.cpp
       inputManager.hpp
+      SFMLOrthogonalLayer.h
       myMain.cpp
       myMain.h
 )

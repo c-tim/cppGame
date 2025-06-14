@@ -1,5 +1,6 @@
 #pragma once
 #include <myMain.h>
+#include <ressourcesLoader.hpp>
 
 #include <Entity.hpp>
 #include <SFML/Graphics.hpp>
@@ -7,9 +8,10 @@
 #include <gameDatas.hpp>
 #include <inputManager.hpp>
 #include <iostream>
-#include <ressourcesLoader.hpp>
 #include <string>
 #include <gameEvents.hpp>
+
+
 
 // TODO for later
 enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 };
@@ -45,11 +47,13 @@ class gameManager {
   void callEntityManagerFaitLAppel();
 
   void initialize_game();
-  static int deltaTime();
+  static int deltaTimeMilli();
+  static sf::Time deltaTime() ;
+
   static void setDeltaTime();
   static void callInputEvent();
   void applyGameLoopAndRender(sf::RenderWindow &window);
-  gameManager() {
+  gameManager() : res{}{
 
     //gameEvent::setInstance(&this);
     //gameEvent::instance = this;

@@ -30,10 +30,14 @@ void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   entity_manager.checkInputOtherActionsPlayers(res);
 
   checkIfHumanClicked(window);
+  res.renderTilemap(window);
   entity_manager.renderEntities(window);
 }
 
-int gameManager::deltaTime() { return deltaTime_calculated.asMilliseconds(); }
+int gameManager::deltaTimeMilli() { return deltaTime_calculated.asMilliseconds(); }
+
+sf::Time gameManager::deltaTime() { return deltaTime_calculated; }
+
 
 void gameManager::setDeltaTime() {
   deltaTime_calculated = gameManager::clock.restart();

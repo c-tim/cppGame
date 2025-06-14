@@ -21,4 +21,4 @@ target_include_directories(entities PUBLIC ./)
 
 
 
-target_link_libraries(entities PUBLIC lib_core visitor_lib pugixml sfml-graphics)
+target_link_libraries(entities PUBLIC lib_core visitor_lib pugixml sfml-graphics tmxlite)

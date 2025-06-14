@@ -69,7 +69,7 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos,
                                              bool canSkipFrame) {
-  currentTickWaited += gameManager::deltaTime();
+  currentTickWaited += gameManager::deltaTimeMilli();
 
   if (canSkipFrame) {
     // We can skip frames if the game runs faster than the animSpeed, but we

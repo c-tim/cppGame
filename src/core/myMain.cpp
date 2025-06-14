@@ -91,6 +91,7 @@ int myMain() {
 
     //cout<<game_manager.deltaTime()<<" deltaTime\n";
     window.clear();
+    
     window.draw(shape);
    // window.draw(testSprite);
    game_manager.applyGameLoopAndRender(window);

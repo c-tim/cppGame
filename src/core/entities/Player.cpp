@@ -44,7 +44,7 @@ void player::move(){
     return tick_since_last_plant_crop>= cooldown_plant_crop;
   }
   void player::updateCooldowns(){
-      tick_since_last_plant_crop += gameManager::deltaTime();
+      tick_since_last_plant_crop += gameManager::deltaTimeMilli();
   }
 
     void player::resetCooldownPlantCrop(){
