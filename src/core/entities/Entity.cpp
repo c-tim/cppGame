@@ -38,11 +38,11 @@ sf::Vector2f vectorialProduct(sf::Vector2f a, sf::Vector2f b) {
 }
 
 void Entity::moveToDestination() {
-  if (pickable) {
+  /*if (pickable) {
     state.toIdle();
     has_destination = false;
     return;
-  }
+  }*/
   sf::Vector2f direction = getDirectionFromDestination();
 
   if (direction == sf::Vector2f{0, 0}) {

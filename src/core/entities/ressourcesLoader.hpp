@@ -19,7 +19,7 @@ class ressourceManager {
 
   sf::Sprite background;
   animatedSprite humanAnimations;
-  animatedSprite patateAnimations{10};
+  animatedSprite patateAnimations{0.5};
 
   void initializeRessourcesGame();
   void renderTilemap(sf::RenderWindow &window);

@@ -93,8 +93,8 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
         currentTickWaited) {
       currentTickWaited = 0;
       nextFrameAnim();
-      cout << "set anim " << currentFrame << "/" << currentTickWaited << "...."
-           << currentAnim << "\n";
+      //cout << "set anim " << currentFrame << "/" << currentTickWaited << "...."
+       //    << currentAnim << "\n";
     }
   }
   // sprite.setTexture(animations[currentAnim].texture[currentFrame]);

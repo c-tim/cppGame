@@ -147,6 +147,10 @@ void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
     currentEntitySelected = sprite_clicked_visitor.getPickableEntitySelected(
         currentEntitySelected, &spawned_entities);*/
         currentEntitySelected = getPickableEntitySelected(&spawned_entities, mousePos);
+        if(currentEntitySelected!=nullptr){
+          currentEntitySelected->has_destination=false;
+          currentEntitySelected->toIdle(); //TODO here change the animation to grabbed later if time
+        }
   }
 }
 

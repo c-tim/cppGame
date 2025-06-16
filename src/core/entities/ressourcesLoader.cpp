@@ -25,7 +25,7 @@ void ressourceManager::initializeRessourcesGame() {
   humanAnimations.addAnimation("walkDown", "walkD", 20, 50);
   humanAnimations.addAnimation("walkRight", "walkR", 30, 100);
 
-  patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
+  patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 1000);
   /*patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
 
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
