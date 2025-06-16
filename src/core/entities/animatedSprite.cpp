@@ -35,7 +35,6 @@ void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
     cout << "The animation of the animatedSprite doesn't have as much frame\n";
     return;
   }
-  // cout << "we render " << "\n";
 
   // animations[anim].texture[frame].update(window);
   sprite.setTexture(animations[anim].texture[frame], true);
@@ -61,11 +60,12 @@ void animatedSprite::setCurrentAnim(int anim) {
   currentTickWaited = 0;
 }
 
+// this method is bad, it uses the position of the sprite, i keep for the record
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              bool canSkipFrame) {
   renderNextTickAnimation(window, sprite.getPosition(), canSkipFrame);
+  assert(1 == 0);  // programm killer
 }
-
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos,
                                              bool canSkipFrame) {
@@ -97,9 +97,11 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
            << currentAnim << "\n";
     }
   }
-  //sprite.setTexture(animations[currentAnim].texture[currentFrame]);
+  // sprite.setTexture(animations[currentAnim].texture[currentFrame]);
+  animations[currentAnim].texture[currentFrame].setSmooth(false);
   setTexture(animations[currentAnim].texture[currentFrame]);
   sprite.setPosition(pos);
+
   window.draw(sprite);
 }
 
@@ -117,9 +119,36 @@ void animatedSprite::initialize() {  // addAnimation("walkLeft", "walkL", 30);
 
 sf::Sprite animatedSprite::getSprite() const { return sprite; }
 
-void animatedSprite::setTexture(sf::Texture &t)
-{
+void animatedSprite::setTexture(sf::Texture &t) {
+  //  fixTextureArtefact(t);
+  t.setSmooth(false);
   sprite.setTexture(t);
-  sf::Vector2f centerTexture{t.getSize().x/2, t.getSize().y/2};
+  sf::Vector2f centerTexture{t.getSize().x / 2, t.getSize().y / 2};
   sprite.setOrigin(centerTexture);
+  sf::Vector2u textureSize = t.getSize();
+  /*  
+      if (textureSize.y > 1) {
+        //sprite.setTextureRect(sf::IntRect(0, 0, texSize.x, texSize.y - 1));
+                sprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(textureSize.x), static_cast<int>(textureSize.y) - 1));
+    }*/
+  // sprite.setTextureRect(sf::IntRect(0,0, t.getSize().x, t.getSize().y));
+
+   /*  if (textureSize.y > 1) {
+        sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y - 1));
+    } else {
+        sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
+    }*/
 }
+
+void animatedSprite::spriteSetScale(float x, float y) {
+  sprite.setScale(sf::Vector2f(x, y));
+}
+
+/*void animatedSprite::fixTextureArtefact(sf::Texture &t){
+
+  sf::Vector2u textureSize = t.getSize();
+      if (textureSize.y > 1) {
+      sprite.setTextureRect(sf::IntRect(0, 0, (int)textureSize.x,
+(int)textureSize.y - 1));
+  }
+}*/

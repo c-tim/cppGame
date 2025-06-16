@@ -57,6 +57,7 @@ class Entity {
         playable{isPlayable},
         pickable{isPickable}
          {
+         // aSprite.spriteSetScale(scale, scale);
     state.toIdle();
   }
 

@@ -37,15 +37,16 @@ class animatedSprite {
         sprite(timmy),
         animations{CopyAnim.animations},
         scale{CopyAnim.scale} {
-    sprite.setScale(sf::Vector2f(CopyAnim.scale, CopyAnim.scale));
+    sprite.setScale(sf::Vector2f(scale, scale));
   }
 
-  animatedSprite(float scale = 0.2f)
+  animatedSprite(float scale = 0.2)
       : timmy("ressources/animation/walkLeft/walkL1.png"),
         sprite(timmy),
         animations{nullAnim},
         scale{scale} {
-    sprite.setScale(sf::Vector2f(scale, scale));
+    //sprite.setScale(sf::Vector2f(scale, scale));
+    
   }
 
   void setCurrentAnim(int anim);
@@ -68,4 +69,8 @@ class animatedSprite {
   sf::Sprite getSprite() const;
 
   void setTexture(sf::Texture &t);
+
+  void spriteSetScale(float x, float y);
+
+ // void fixTextureArtefact(sf::Texture &t);
 };

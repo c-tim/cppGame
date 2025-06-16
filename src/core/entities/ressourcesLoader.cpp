@@ -1,6 +1,7 @@
 #include <gameManager.hpp>
 #include <ressourcesLoader.hpp>
 
+/// @brief 
 void ressourceManager::initializeRessourcesGame() {
   humanAnimations.addAnimation("walkUp", "walkU", 1, 10000);
   humanAnimations.addAnimation("walkLeft", "walkL", 1, 10000);
@@ -13,7 +14,7 @@ void ressourceManager::initializeRessourcesGame() {
   humanAnimations.addAnimation("walkRight", "walkR", 30, 100);
 
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
-  patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
+  /*patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
 
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
 
@@ -35,7 +36,7 @@ void ressourceManager::initializeRessourcesGame() {
 
   patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
 
-  patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);
+  patateAnimations.addAnimation("PatateCrops", "patateCrops", 8, 100);*/
 }
 
 void ressourceManager::renderTilemap(sf::RenderWindow &window) {

@@ -11,7 +11,7 @@ class ressourceManager {
  public:
  // tmx::Map map;
   animatedSprite humanAnimations;
-  animatedSprite patateAnimations;
+  animatedSprite patateAnimations{1};
 
   void initializeRessourcesGame();
   void renderTilemap(sf::RenderWindow &window);
