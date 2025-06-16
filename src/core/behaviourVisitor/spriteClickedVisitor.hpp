@@ -20,6 +20,6 @@ class spriteClickedVisitor : defaultVisitor {
   void visitPlayer(const player *element) const override;
   void visitCrop(const crop *element) const override;
 
-  Entity* testIfPickableEntitySelected(Entity* ptrEntitySelected,std::vector<std::unique_ptr<Entity>> *list);
+  Entity* getPickableEntitySelected(std::vector<std::unique_ptr<Entity>> *list);
 
 };

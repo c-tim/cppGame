@@ -19,7 +19,7 @@ void spriteClickedVisitor::visitHuman(const Human *element) const {
 void spriteClickedVisitor::visitPlayer(const player *element) const {
     if(element->isSpriteInBoundOfPos(mousePos)){
     save_ptr_entity_selected = (const Entity*) element;
-    gameManager::instance->newPlayerBusted();
+    //gameManager::instance->newPlayerBusted();
   }
   //cout << "test moi cest player\n";
 }
@@ -29,14 +29,14 @@ void spriteClickedVisitor::visitCrop(const crop *element) const {
 
 
 
-Entity* spriteClickedVisitor::testIfPickableEntitySelected(Entity* ptrEntitySelected,std::vector<std::unique_ptr<Entity>> *list){
-  save_ptr_entity_selected = ptrEntitySelected;
-  for(auto const &e: *list){
+Entity* spriteClickedVisitor::getPickableEntitySelected(std::vector<std::unique_ptr<Entity>> *list){
+ // save_ptr_entity_selected = ptrEntitySelected;
+  /*for(auto const &e: *list){
     if(save_ptr_entity_selected != nullptr){
-      return ptrEntitySelected;
+      return save_ptr_entity_selected;
     }
     e->accept(this);
-  }
+  }*/
   return nullptr;
 }
 

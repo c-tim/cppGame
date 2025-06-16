@@ -68,7 +68,10 @@ int myMain() {
       if (const auto *resized = event->getIf<sf::Event::Resized>()) {
 
         sf::FloatRect visibleArea({0.f, 0.f}, sf::Vector2f(resized->size));
+
         window.setView(sf::View(visibleArea));
+        //window.setSize(sf::Vector2u(resized->size));
+        
       }
       
     }

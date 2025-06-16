@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFMLOrthogonalLayer.h>
+//#include <SFMLOrthogonalLayer.h>
 
 #include <animatedSprite.hpp>
 #include <ostream>
@@ -9,14 +9,14 @@
 
 class ressourceManager {
  public:
-  tmx::Map map;
+ // tmx::Map map;
   animatedSprite humanAnimations;
   animatedSprite patateAnimations;
 
   void initializeRessourcesGame();
   void renderTilemap(sf::RenderWindow &window);
   ressourceManager()  {
-    map.load("ressources/tileMap/testTileMap.tmx");
+  //  map.load("ressources/tileMap/testTileMap.tmx");
 
     initializeRessourcesGame();
   }

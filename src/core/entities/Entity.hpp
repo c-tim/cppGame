@@ -44,16 +44,19 @@ class Entity {
   bool canHaveNewDestination();
 
   bool has_destination = false;
+  const bool pickable;
 
   Entity(const int id, std::string const& type, sf::Vector2f position,
-         animatedSprite& templateAnimatedSprite, float scale, float speed = 1,
+         animatedSprite& templateAnimatedSprite, float scale, bool isPickable ,float speed = 1,
          bool isPlayable = false)
       : id{id},
         type{type},
         feet_position{position},
         aSprite{templateAnimatedSprite},
         speed{speed},
-        playable{isPlayable} {
+        playable{isPlayable},
+        pickable{isPickable}
+         {
     state.toIdle();
   }
 

@@ -16,7 +16,7 @@ class player : public Entity {
  void checkForBoundaries();
  public:
   player(int id, sf::Vector2f position, ressourceManager& res)
-      : Entity(id, "player", position, res.humanAnimations, 0.2,
+      : Entity(id, "player", position, res.humanAnimations, 0.2,true,
                GameDatas::humanSpeed, true) {
     // aSprite = res.humanAnimations;
     //  aSprite.addAnimation("walkLeft", "walk", 30);

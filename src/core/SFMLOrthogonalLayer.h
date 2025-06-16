@@ -77,6 +77,8 @@ class MapLayer final : public sf::Drawable {
     else {
       // round the chunk size to the nearest tile
       const auto tileSize = map.getTileSize();
+       // const auto tileSize = tmx::Vector2u{map.getTileSize().x*10, map.getTileSize().y*10} ;
+
       m_chunkSize.x = std::floor(m_chunkSize.x / tileSize.x) * tileSize.x;
       m_chunkSize.y = std::floor(m_chunkSize.y / tileSize.y) * tileSize.y;
       m_mapTileSize.x = map.getTileSize().x;

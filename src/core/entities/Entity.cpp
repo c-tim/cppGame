@@ -38,6 +38,11 @@ sf::Vector2f vectorialProduct(sf::Vector2f a, sf::Vector2f b) {
 }
 
 void Entity::moveToDestination() {
+  if (pickable) {
+    state.toIdle();
+    has_destination = false;
+    return;
+  }
   sf::Vector2f direction = getDirectionFromDestination();
 
   if (direction == sf::Vector2f{0, 0}) {
@@ -69,17 +74,17 @@ sf::Vector2f Entity::getDirectionFromDestination() {
 
   sf::Vector2f direction = destination - feet_position;
 
- /* if (abs(direction.x) < 5 || std::isnan(direction.x)) {
-    direction.x = 0;
-  }
+  /* if (abs(direction.x) < 5 || std::isnan(direction.x)) {
+     direction.x = 0;
+   }
 
-  if (abs(direction.y) < 5 || std::isnan(direction.y)) {
-    direction.y = 0;
-  }*/
-    cout<<"pos :"<< feet_position.x<< "/"<<feet_position.y<<"\n";
-    cout<<"destination :"<< destination.x<< "/"<<destination.y<<"\n";
+   if (abs(direction.y) < 5 || std::isnan(direction.y)) {
+     direction.y = 0;
+   }*/
+  cout << "pos :" << feet_position.x << "/" << feet_position.y << "\n";
+  cout << "destination :" << destination.x << "/" << destination.y << "\n";
 
-  cout<<"direction :"<< direction.x<< "/"<<direction.y<<"\n";
+  cout << "direction :" << direction.x << "/" << direction.y << "\n";
   return direction;
 }
 
@@ -115,7 +120,8 @@ void Entity::moveWithDir(sf::Vector2f direction) {
   feet_position.x += normalized_direction_to_take.x * stepToMove;
   feet_position.y += normalized_direction_to_take.y * stepToMove;
 
-    cout<<"position apres move:"<< feet_position.x<< "/"<<feet_position.y<<"\n";
+  cout << "position apres move:" << feet_position.x << "/" << feet_position.y
+       << "\n";
 
   // if(abs(destination.x - feet_position.x)> )
 

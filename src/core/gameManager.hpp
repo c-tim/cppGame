@@ -39,7 +39,9 @@ class gameManager {
 
   static bool newCropPlanted(sf::Vector2f pos);
 
-  static void OnMouseClicked(sf::Vector2f mousePos);
+  static void OnMouseLeftClicked(sf::Vector2f mousePos);
+
+   static void OnMouseRightClicked(sf::Vector2f mousePos);
 
     static void movePlayerSelected(sf::Vector2f mousePos);
 

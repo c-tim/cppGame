@@ -14,7 +14,7 @@ class Human : public Entity {
  private:
  bool isPicked = false;
  public:
-  Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, 0.2,GameDatas::humanSpeed)  {
+  Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, 0.2,true,GameDatas::humanSpeed)  {
     //aSprite = res.humanAnimations;
     // aSprite.addAnimation("walkLeft", "walk", 30);
   }

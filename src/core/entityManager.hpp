@@ -54,4 +54,8 @@ class entityManager {
 
   void moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos);
   void moveSelectedPlayerToMouse(sf::Vector2f mousePos);
+    player* getPlayerSelected();
+
+
+  Entity* getPickableEntitySelected(std::vector<std::unique_ptr<Entity>> *list, sf::Vector2f mousePos);
 };

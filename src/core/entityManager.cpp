@@ -135,17 +135,18 @@ void EM::addCropPoseToQueue(sf::Vector2f pos) {
 void EM::faitLAppel() { coucouVisitor appel{&spawned_entities}; }
 
 void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
-  //Soit une entité a deja ete selectionne avant et le click la deselectionne
+  // Soit une entité a deja ete selectionne avant et le click la deselectionne
   if (currentEntitySelected != nullptr) {
-    cout << "gotacha\n";
+    cout << "RELEASE SELECTED \n";
     currentEntitySelected->setPosition((sf::Vector2f)mousePos);
     currentEntitySelected = nullptr;
   }
-  //soit on regarde si une nouvelle entite est selectionnée 
+  // soit on regarde si une nouvelle entite est selectionnée
   else {
-    sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
-    currentEntitySelected = sprite_clicked_visitor.testIfPickableEntitySelected(
-        currentEntitySelected, &spawned_entities);
+   /* sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
+    currentEntitySelected = sprite_clicked_visitor.getPickableEntitySelected(
+        currentEntitySelected, &spawned_entities);*/
+        currentEntitySelected = getPickableEntitySelected(&spawned_entities, mousePos);
   }
 }
 
@@ -153,6 +154,29 @@ void EM::moveSelectedPlayerToMouse(sf::Vector2f mousePos) {
   if (currentEntitySelected != nullptr) {
     cout << "gotacha\n";
     currentEntitySelected->setPosition((sf::Vector2f)mousePos);
-    
+    currentEntitySelected->has_destination = false;
   }
+}
+
+Entity *EM::getPickableEntitySelected(
+    std::vector<std::unique_ptr<Entity>> *list, sf::Vector2f mousePos) {
+  for (auto const &e : *list) {
+    if (e->pickable && e->isSpriteInBoundOfPos(mousePos)) {
+      return e.get();
+    }
+  }
+  return nullptr;
+}
+
+
+player* EM::getPlayerSelected(){
+  //not optimal but works 
+    if (currentEntitySelected == nullptr) {
+        return nullptr;
+    }
+    if(currentEntitySelected->pickable){
+      return (player*)currentEntitySelected;
+          //gameManager::instance->newPlayerBusted();
+    }
+    return nullptr;
 }

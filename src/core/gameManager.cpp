@@ -13,13 +13,11 @@ sf::Clock gameManager::clock;
 
 gameManager *gameManager::instance;
 
-
 void gm::initialize_game() {
   currentGameState = gameState::InGame;
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
   entity_manager.generatePlayer(res);
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJStart);
-
 }
 
 void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
@@ -34,10 +32,11 @@ void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   entity_manager.renderEntities(window);
 }
 
-int gameManager::deltaTimeMilli() { return deltaTime_calculated.asMilliseconds(); }
+int gameManager::deltaTimeMilli() {
+  return deltaTime_calculated.asMilliseconds();
+}
 
 sf::Time gameManager::deltaTime() { return deltaTime_calculated; }
-
 
 void gameManager::setDeltaTime() {
   deltaTime_calculated = gameManager::clock.restart();
@@ -52,17 +51,20 @@ bool gameManager::newCropPlanted(sf::Vector2f pos) {
   return true;
 }
 
-void gameManager::OnMouseClicked(sf::Vector2f mousePos){
+void gameManager::OnMouseLeftClicked(sf::Vector2f mousePos) {
   instance->entity_manager.moveSelectedEntityOrUnSelectIt(mousePos);
 }
 
-     void gameManager::movePlayerSelected(sf::Vector2f mousePos){
-      instance->entity_manager.moveSelectedPlayerToMouse(mousePos);
-     }
+void gameManager::OnMouseRightClicked(sf::Vector2f mousePos) {
+  player * playerSelected = instance->entity_manager.getPlayerSelected();
+if(playerSelected->playable){
+  //TODO temp solution, only one hider for the moment, so newPlayerBusted end the game
+  instance->newPlayerBusted();
+}
+}
 
+void gameManager::movePlayerSelected(sf::Vector2f mousePos) {
+  instance->entity_manager.moveSelectedPlayerToMouse(mousePos);
+}
 
-  void gameManager::callEntityManagerFaitLAppel(){
-    entity_manager.faitLAppel();
-  }
-
-
+void gameManager::callEntityManagerFaitLAppel() { entity_manager.faitLAppel(); }

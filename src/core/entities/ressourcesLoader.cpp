@@ -41,7 +41,7 @@ void ressourceManager::initializeRessourcesGame() {
 void ressourceManager::renderTilemap(sf::RenderWindow &window) {
   // TODO very uneffective to create each time but maplayer have to be
   // initialized and i need to get the map so i keep this for the moment
-  MapLayer layerZero(map, 0, 5);
-  layerZero.update(gameManager::deltaTime());
-  window.draw(layerZero);
+ // MapLayer layerZero(map, 0, 5);
+  //layerZero.update(gameManager::deltaTime());
+  //window.draw(layerZero);
 }
