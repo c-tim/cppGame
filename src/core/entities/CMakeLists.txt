@@ -14,6 +14,7 @@ add_library(
     animatedSprite.cpp
     ressourcesLoader.hpp
     ressourcesLoader.cpp
+    
 
 )
 

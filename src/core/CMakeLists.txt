@@ -10,6 +10,7 @@ add_library(lib_core
       inputManager.hpp
       myMain.cpp
       myMain.h
+      SFMLOrthogonalLayer.h
 )
 
 add_subdirectory(entities)

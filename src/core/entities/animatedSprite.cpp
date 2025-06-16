@@ -133,11 +133,11 @@ void animatedSprite::setTexture(sf::Texture &t) {
     }*/
   // sprite.setTextureRect(sf::IntRect(0,0, t.getSize().x, t.getSize().y));
 
-   /*  if (textureSize.y > 1) {
-        sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y - 1));
+    if (textureSize.y > 1) {
+        sprite.setTextureRect(sf::IntRect( sf::Vector2i(0, 0),sf::Vector2i(textureSize.x, textureSize.y - 1)));
     } else {
-        sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
-    }*/
+        //sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
+    }
 }
 
 void animatedSprite::spriteSetScale(float x, float y) {

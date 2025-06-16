@@ -1,22 +1,33 @@
 #pragma once
 
 //#include <SFMLOrthogonalLayer.h>
-
+#include "SFML/Graphics.hpp"
 #include <animatedSprite.hpp>
 #include <ostream>
+#include <string>
 
 #include "Entity.hpp"
 
 class ressourceManager {
+
+  private:
+
  public:
- // tmx::Map map;
+ //tmx::Map map;
+  sf::Texture bgTexture;
+    sf::Texture timmy; //It should have worked without him, but guess the constructor of Sprite is not recognised
+
+  sf::Sprite background;
   animatedSprite humanAnimations;
-  animatedSprite patateAnimations{1};
+  animatedSprite patateAnimations{10};
 
   void initializeRessourcesGame();
   void renderTilemap(sf::RenderWindow &window);
-  ressourceManager()  {
-  //  map.load("ressources/tileMap/testTileMap.tmx");
+  //void changeSizeLayerMap(float size, MapLayer &layer);
+  void loadTextureFromFile(sf::Texture &t,const std::string& path);
+  ressourceManager() :timmy("ressources/texture/timmy.png"), background{timmy}
+{
+   //map.load("ressources/tileMap/testTileMap.tmx");
 
     initializeRessourcesGame();
   }

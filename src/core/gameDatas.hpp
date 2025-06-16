@@ -17,6 +17,8 @@ const double ratioMovePNJGameLoop = 0.001;
 const double ratioIdlePNJGameLoop = 0.0001;
 
 
+const float sizeBackgroundTileMap = 4;
+const sf::Vector2i dimensionsBackground{20,10};
 
 // window datas
 struct windowsData {
