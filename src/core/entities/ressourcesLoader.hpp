@@ -1,4 +1,4 @@
-initialize_game#pragma once
+#pragma once
 
 //#include <SFMLOrthogonalLayer.h>
 #include "SFML/Graphics.hpp"
