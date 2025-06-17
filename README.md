@@ -20,7 +20,18 @@ clic gauche pour deplacer un humain (joueur ou non-joueurs), clic-droit pour "v�
 Si l'humain sélectionné est bien un joueur, la partie s'arrête (en l'occurrence par une sortie de la fenêtre).
 
 
+## Image :
 
+![Copie d'écran_20250618_004448](https://github.com/user-attachments/assets/8c48e105-f29a-4615-a6e2-a49d1b878572)
+
+## Lancer le jeu
+Sur Vscode le jeu peut être compilé et lancé avec le module officiel de Microsoft CMakeTools.
+Dans le fichier gameDatas.hpp, vous pouvez modifiez les variables constantes du jeu pour s'amuser, dont :
+- le nombre de joueurs cachés (1 ou 2)
+- le nombre d'humains non jouables (stable jusqua 200 sur mon pc 8gb de RAM)
+- la vitesse des humains et des plants de pommes de terre
+- les ratios d'activations des humains (1 ils bougent tout le temps)
+- en milliSeconde, le temps d'attente pour planter (commun a tout les joueurs)
 
 
 
