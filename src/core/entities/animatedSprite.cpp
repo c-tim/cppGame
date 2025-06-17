@@ -3,6 +3,7 @@
 
 using std::string, std::cout;
 
+/*Load a new animations with given path and store it in animations*/
 void animatedSprite::addAnimation(const string &path, const string &name,
                                   int count, int speed, float scale) {
   struct animation newAnim;
@@ -26,6 +27,7 @@ void animatedSprite::addAnimation(const string &path, const string &name,
   animations.push_back(newAnim);
 }
 
+/*Render in window the given animation at the given frame*/
 void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
                                             int frame) {
   if (animations.size() <= anim) {
@@ -36,12 +38,9 @@ void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
     cout << "The animation of the animatedSprite doesn't have as much frame\n";
     return;
   }
-
-  // animations[anim].texture[frame].update(window);
   sprite.setTexture(animations[anim].texture[frame], true);
   sprite.setScale(sf::Vector2f{animations[anim].adjustScale * scale,
                                animations[anim].adjustScale * scale});
-
   window.draw(sprite);
 }
 
@@ -53,11 +52,9 @@ void animatedSprite::setCurrentAnim(int anim) {
     cout << "The animatedSprite doesn't have as much animations\n";
     return;
   }
-
   if (anim == currentAnim) {
     return;
   }
-
   currentAnim = anim;
   currentFrame = 0;
   currentTickWaited = 0;
@@ -69,6 +66,9 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
   renderNextTickAnimation(window, sprite.getPosition(), canSkipFrame);
   assert(1 == 0);  // programm killer
 }
+
+/*Check if enought time has passed to load the next frame of animations and
+ * display animation*/
 void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
                                              sf::Vector2f pos,
                                              bool canSkipFrame) {
@@ -96,18 +96,13 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
         currentTickWaited) {
       currentTickWaited = 0;
       nextFrameAnim();
-      // cout << "set anim " << currentFrame << "/" << currentTickWaited <<
-      // "...."
-      //     << currentAnim << "\n";
     }
   }
-  // sprite.setTexture(animations[currentAnim].texture[currentFrame]);
   animations[currentAnim].texture[currentFrame].setSmooth(false);
   setTexture(animations[currentAnim].texture[currentFrame]);
   sprite.setScale(sf::Vector2f{animations[currentAnim].adjustScale * scale,
                                animations[currentAnim].adjustScale * scale});
   sprite.setPosition(pos);
-
   window.draw(sprite);
 }
 
@@ -119,48 +114,41 @@ void animatedSprite::nextFrameAnim() {
       currentFrame = 0;
 
     } else {
+      // If looped is desactivated (as for crops), the animation is stuck on
+      // last frame
       currentFrame = animations[currentAnim].numberFrame - 1;
     }
   }
 }
 
-void animatedSprite::initialize() {  // addAnimation("walkLeft", "walkL", 30);
-}
+// Useless, wont remove because time is over
+void animatedSprite::initialize() {}
 
+// Getter for Sprite
 sf::Sprite animatedSprite::getSprite() const { return sprite; }
 
+/*Setter for Texture*/
 void animatedSprite::setTexture(sf::Texture &t) {
-  //  fixTextureArtefact(t);
+  // set smooth false because it was recommended to remove a weird artefact on
+  // crops (the last line of image was duplicated below till the end of the
+  // window)
   t.setSmooth(false);
   sprite.setTexture(t);
+  //Recenter the texture so that the position is alsmot at the same place as the texture
   sf::Vector2f centerTexture{t.getSize().x / 2, t.getSize().y / 2};
   sprite.setOrigin(centerTexture);
   sf::Vector2u textureSize = t.getSize();
-  /*
-      if (textureSize.y > 1) {
-        //sprite.setTextureRect(sf::IntRect(0, 0, texSize.x, texSize.y - 1));
-                sprite.setTextureRect(sf::IntRect(0, 0,
-    static_cast<int>(textureSize.x), static_cast<int>(textureSize.y) - 1));
-    }*/
-  // sprite.setTextureRect(sf::IntRect(0,0, t.getSize().x, t.getSize().y));
 
+  //Another attempt to remove the weird artefact
   if (textureSize.y > 1) {
     sprite.setTextureRect(sf::IntRect(
         sf::Vector2i(0, 0), sf::Vector2i(textureSize.x, textureSize.y - 1)));
   } else {
-    // sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
   }
 }
 
+// Adjust scale of the sprite (all animations affected)
 void animatedSprite::spriteSetScale(float x, float y) {
   sprite.setScale(sf::Vector2f(x, y));
 }
 
-/*void animatedSprite::fixTextureArtefact(sf::Texture &t){
-
-  sf::Vector2u textureSize = t.getSize();
-      if (textureSize.y > 1) {
-      sprite.setTextureRect(sf::IntRect(0, 0, (int)textureSize.x,
-(int)textureSize.y - 1));
-  }
-}*/

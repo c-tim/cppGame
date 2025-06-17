@@ -59,20 +59,13 @@ float scale;
         playable{isPlayable},
         pickable{isPickable}
          {
-         // aSprite.spriteSetScale(scale, scale);
     state.toIdle();
   }
 
   virtual void accept(defaultVisitor* vis) const = 0;
 
-  // TODO not quite understood what exactly this do but prevent copy const
-  // variables
-  /*Entity(const Entity&) = delete;
-  Entity& operator=(const Entity&) = delete;*/
 
   std::string to_string();
-
-  // std::ostream& operator<<(std::ostream& os);
 
   void moveToDestination();
 
@@ -92,5 +85,4 @@ float scale;
 
   bool isSpriteInBoundOfPos(sf::Vector2f pos) const;
 
-  // easier than operator<< but should fix issue later (TODO)
 };

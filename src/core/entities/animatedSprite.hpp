@@ -15,14 +15,14 @@ class animatedSprite {
     bool looped = true;
     float adjustScale = 1; 
   };
-  sf::Texture timmy;
+  sf::Texture defaultSprite;
   sf::Sprite sprite;
 
   int currentFrame = 0;
 
   float scale;
 
-  // a layer for the animt
+  // a layer for the animt (bad practice used for the constructor )
   std::vector<struct animation> nullAnim;
 
  public:
@@ -34,20 +34,18 @@ class animatedSprite {
   int currentAnim = 0;
 
   animatedSprite(animatedSprite &CopyAnim)
-      : timmy("ressources/animation/walkLeft/walkL1.png"),
-        sprite(timmy),
+      : defaultSprite("ressources/animation/walkLeft/walkL1.png"),
+        sprite(defaultSprite),
         animations{CopyAnim.animations},
         scale{CopyAnim.scale} {
     sprite.setScale(sf::Vector2f(scale, scale));
   }
 
   animatedSprite(float scale = 0.2)
-      : timmy("ressources/animation/walkLeft/walkL1.png"),
-        sprite(timmy),
+      : defaultSprite("ressources/animation/walkLeft/walkL1.png"),
+        sprite(defaultSprite),
         animations{nullAnim},
-        scale{scale} {
-    //sprite.setScale(sf::Vector2f(scale, scale));
-    
+        scale{scale} {    
   }
 
   void setCurrentAnim(int anim);
@@ -72,6 +70,4 @@ class animatedSprite {
   void setTexture(sf::Texture &t);
 
   void spriteSetScale(float x, float y);
-
- // void fixTextureArtefact(sf::Texture &t);
 };

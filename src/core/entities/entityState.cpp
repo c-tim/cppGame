@@ -5,19 +5,16 @@ using std::cout;
 
 int entityState::getState() { return currentState; }
 
+/* The animation are sorted in ressourceLoader.cpp to be in this order (Up Left Down Right)*/
 int entityState::getIdAnim() { return (4 * currentState + currentDirection); }
 
 int entityState::changeIdAnim(animatedSprite &varAnim) {
-  // TODO when has correct animation return correct idAnim
-  // varAnim= (currentState + 1) * currentDirection;
-  // return varAnim;
   varAnim.setCurrentAnim(4 * currentState + currentDirection);
   return 0;
 }
 
 void entityState::setCurrentDirection(int dir) {
   currentDirection = dir;
- // changeIdAnim(varAnim);
 }
 
 void entityState::toIdle(int dir) {
@@ -26,8 +23,6 @@ void entityState::toIdle(int dir) {
   if (dir >= 0 && dir <= 3) {
     currentDirection = dir;
   }
-
- // changeIdAnim(varAnim);
 }
 
 void entityState::moveDirection(sf::Vector2i normalized_dir) {
@@ -41,25 +36,8 @@ void entityState::moveDirection(sf::Vector2i normalized_dir) {
 
   currentState = MOVING;
   currentDirection = vecDirToDir((sf::Vector2f)normalized_dir);
-
-  /*if(currentDirection != RIGHT){
-      //cout<<"ha";
-
-    }else{
-      //cout<<"hb";
-    }*/
-  /*if (normalized_dir.x == 1) {
-    currentDirection = RIGHT;
-  } else if (normalized_dir.x == -1) {
-    currentDirection = LEFT;
-  } else if (normalized_dir.y == 1) {
-    currentDirection = DOWN;
-  } else {
-    currentDirection = UP;
-  }*/
-
- // changeIdAnim(varAnim);
 }
+
 
 sf::Vector2i entityState::dirToVecDir(int dir) {
   // DONE check if correct vector -> unitTests
@@ -97,7 +75,6 @@ int entityState::getAxisMoving(sf::Vector2f direction) {
   int testDir = vecDirToDir((sf::Vector2f)direction);
   // -1 if null vector or two axis involved
   if (testDir != -1) {
-    //   setCurrentDirection(testDir, varAnim);
     return testDir;
   }
 
@@ -116,33 +93,17 @@ int entityState::getAxisMoving(sf::Vector2f direction) {
 
   //Now we know direction and currentDirection are opposed for both x and y
 
-  // another test to see if now we have a direction (else the former direction
-  // is not compatible to reach destination)
-  /*testDir = vecDirToDir((sf::Vector2f)produit_vec);
-  // -1 if null vector or two axis involved
-  if (testDir != -1) {
-    // setCurrentDirection(testDir, varAnim);
-    return testDir;
-  }*/
-
   // last strategy random between the two axis
   if ((double)rand() / RAND_MAX > 0.5) {
     if (direction.x < 0) {
-      // setCurrentDirection(LEFT, varAnim);
       return LEFT;
     }
-    // setCurrentDirection(RIGHT, varAnim);
-
     return RIGHT;
   }
 
   if (direction.y < 0) {
-    // setCurrentDirection(UP, varAnim);
-
     return UP;
   }
-  // setCurrentDirection(DOWN, varAnim);
-
   return DOWN;
 }
 

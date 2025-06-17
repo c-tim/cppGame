@@ -128,17 +128,6 @@ TEST(TestGame, randomPosInPlayableArea) {
   }
 }
 
-/*TEST(TestGame, randomPosInPlayableArea) {
-  ressourceManager res;
-  Human h{0, sf::Vector2f{4, 15}, res};
-  for (size_t i = 0; i < 100; i++) {
-    sf::Vector2f pos = random_pos_in_playable_area();
-    EXPECT_TRUE(pos.x >= GameDatas::playableAreaX[0]);
-    EXPECT_TRUE(pos.x <= GameDatas::playableAreaX[1]);
-    EXPECT_TRUE(pos.y >= GameDatas::playableAreaY[0]);
-    EXPECT_TRUE(pos.y <= GameDatas::playableAreaY[1]);
-  }
-}*/
 
 TEST(TestGame, pnjReachDestination) {
   ressourceManager res;

@@ -15,8 +15,6 @@ class Human : public Entity {
  bool isPicked = false;
  public:
   Human(int id, sf::Vector2f position, ressourceManager &res) : Entity(id, "Human", position, res.humanAnimations, GameDatas::humanSize,true,GameDatas::humanSpeed)  {
-    //aSprite = res.humanAnimations;
-    // aSprite.addAnimation("walkLeft", "walk", 30);
   }
 
   void render( sf::RenderWindow &window) override;

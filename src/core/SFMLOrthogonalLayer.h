@@ -105,10 +105,6 @@ class MapLayer final : public sf::Drawable {
 
   const sf::FloatRect& getGlobalBounds() const { return m_globalBounds; }
 
-  //Warning modified code
-
-
-  //Warning code
 
   void setTile(std::int32_t tileX, std::int32_t tileY,
                tmx::TileLayer::Tile tile, bool refresh = true) {

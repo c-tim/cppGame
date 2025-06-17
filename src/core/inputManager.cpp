@@ -27,8 +27,6 @@ sf::Vector2i getInputsKeyboard(struct player_info keys) {
   if (sfkey::isKeyPressed(keys.keyUp)) {
     dir.y -= 1;
   }
-
-  // cout<< " Inputs : "<< dir.x<< " / "<< dir.y<<"\n";
   return dir;
 }
 
@@ -36,9 +34,7 @@ bool getInputCrop(player &p) {
   if (sf::Keyboard::isKeyPressed(p.keyPlayer.keyPlant)) {
     gameManager::newCropPlanted(p.getPosition());
     return true;
-    /*if (p.tick_since_last_plant_crop > GameDatas::COOLDOWN_PLANT_TREE) {
-      p.tick_since_last_plant_crop=0;
-    }*/
+
   }
   return false;
 }
@@ -55,7 +51,6 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
 
 
   if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-    // sf::Vector2f pos = sf::Mouse::getPosition();
     sf::CircleShape shape(50.F);
     shape.setFillColor(sf::Color::Red);
     shape.setPosition(rescaledMousePos);

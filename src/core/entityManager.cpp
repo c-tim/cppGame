@@ -12,7 +12,7 @@ using std::cout;
 
 // TODO, the random generator could have float value if we want to
 int generate_random_number(int start, int end) {
-  // TODO see this to understand
+  // TODO see this to understand (I dont understand this, it came from other code)
   std::random_device rd;  // obtain a random number from hardware
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int> distribution(start, end);
@@ -30,8 +30,6 @@ sf::Vector2f random_pos_in_playable_area() {
 void EM::generateHuman(ressourceManager &res) {
   std::unique_ptr<Human> ptrHuman =
       std::make_unique<Human>(idNextEntity, random_pos_in_playable_area(), res);
-  cout << "spawned pnj : " << ptrHuman->to_string() << "\n";
-
   ++idNextEntity;
   spawned_entities.push_back(std::move(ptrHuman));
 }
@@ -41,7 +39,6 @@ void EM::generatePlayer(ressourceManager &res, int index_Player) {
       idNextEntity, random_pos_in_playable_area(), res);
   ++idNextEntity;
   setPlayerInfo(index_Player, p->keyPlayer);
-  cout << "spawned human : " << p->to_string() << "\n";
   player *p_ptr = p.get();
 
   spawned_entities.push_back(std::move(p));
@@ -57,7 +54,6 @@ void EM::generateHumans(int count, ressourceManager &res) {
 void EM::generateCrop(ressourceManager &res, sf::Vector2f pos) {
   std::unique_ptr<crop> p = std::make_unique<crop>(idNextEntity, pos, res);
   ++idNextEntity;
-  cout << "spawned crop : " << p->to_string() << "\n";
 
   spawned_entities.push_back(std::move(p));
 }
@@ -73,37 +69,32 @@ bool EM::compZOrderEntity(std::unique_ptr<Entity> &a,
 }
 
 void EM::sortEntityByZOrder(
-    // TODO adjust zorder with player
+    // DONE adjust zorder with player
     std::vector<std::unique_ptr<Entity>> &list_entities) {
   sort(list_entities.begin(), list_entities.end(), compZOrderEntity);
 }
 
+/*Call render for each entity*/
 void EM::renderEntities(sf::RenderWindow &window) {
   sortEntityByZOrder(spawned_entities);
   for (const auto &entity : spawned_entities) {
     entity->render(window);
   }
-  
-
-  /*for (auto &e : players) {
-     e.render(window);
-   }*/
 }
 
+/* For each entity, if random test past (ratioToMove), set a destination to humans*/
 void EM::swapStateToMovePNJEntities(float ratioToMove) {
-  // TODO add the same for Idle
+  // DONE add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
     if (a < ratioToMove && !e->playable && e->canHaveNewDestination()) {
       sf::Vector2f vec = random_pos_in_playable_area();
-      // cout << "New destination" << vec.x << "/" << vec.y << "\n";
       e->setDestination(vec);
     }
   }
 }
 
 void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
-  // TODO add the same for Idle
   for (auto &e : spawned_entities) {
     double a = (double)rand() / RAND_MAX;
     if (a < ratioToIdle && !e->playable) {
@@ -113,7 +104,7 @@ void EM::swapStateToIdlePNJEntities(float ratioToIdle) {
 }
 
 void EM::moveEntities() {
-  // TODO remove i (used for debuuger)
+  // TODO remove i (used for debuuger) 
   int i = 0;
   for (auto &e : spawned_entities) {
     e->move();
@@ -121,10 +112,10 @@ void EM::moveEntities() {
   }
 }
 
+/*Check if players wants to plant crop*/
 void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
   crop_to_plant_queue.clear();
-
-  // cout<<" qedd "<< players.size()<<"\n";
+  //First we collect the positions of all the players who want to plant crops
   for (auto &e : players) {
     player p = *e;
     if (tick_since_lastPlant_grow >= GameDatas::COOLDOWN_PLANT_TREE) {
@@ -134,15 +125,18 @@ void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
     }
   }
 
+  //Then we plant them at the correct position, to prevent a modification of spawned_entities during its reading
   for (auto &pos : crop_to_plant_queue) {
     generateCrop(res, pos);
   }
 }
 
+/*Used for the method above*/
 void EM::addCropPoseToQueue(sf::Vector2f pos) {
   crop_to_plant_queue.push_back(pos);
 }
 
+/* Test for the pattern visitor (the pattern is not used for other purpose)*/
 void EM::faitLAppel() { coucouVisitor appel{&spawned_entities}; }
 
 void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
@@ -154,22 +148,18 @@ void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
   }
   // soit on regarde si une nouvelle entite est selectionnée
   else {
-    /* sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
-     currentEntitySelected = sprite_clicked_visitor.getPickableEntitySelected(
-         currentEntitySelected, &spawned_entities);*/
     currentEntitySelected =
         getPickableEntitySelected(&spawned_entities, mousePos);
     if (currentEntitySelected != nullptr) {
       currentEntitySelected->has_destination = false;
       currentEntitySelected->toIdle();  // TODO here change the animation to
-                                        // grabbed later if time
+                                        // grabbed later if time (pas implemente mais je voulais mettre une animation de personnage qui agite les bras)
     }
   }
 }
 
 void EM::moveSelectedPlayerToMouse(sf::Vector2f mousePos) {
   if (currentEntitySelected != nullptr) {
-    cout << "gotacha\n";
     currentEntitySelected->setPosition((sf::Vector2f)mousePos);
     currentEntitySelected->has_destination = false;
   }
@@ -192,11 +182,11 @@ player *EM::getPlayerSelected() {
   }
   if (currentEntitySelected->pickable) {
     return (player *)currentEntitySelected;
-    // gameManager::instance->newPlayerBusted();
   }
   return nullptr;
 }
 
+/*Conserve les touches de tout les joueurs (peut etre etendue a plusieurs joueurs)*/
 void setPlayerInfo(int index, struct player_info &info) {
   if (index == 0) {
     info = {key::Up, key::Left, key::Down, key::Right, key::Semicolon};

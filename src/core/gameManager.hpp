@@ -51,8 +51,6 @@ class gameManager {
   void renderScore(sf::RenderWindow &window);
   void applyGameLoopAndRender(sf::RenderWindow &window);
   gameManager() : res{} {
-    // gameEvent::setInstance(&this);
-    // gameEvent::instance = this;
     instance = this;
     gameManager::clock.start();
   }

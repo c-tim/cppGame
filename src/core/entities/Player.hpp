@@ -34,8 +34,6 @@ class player : public Entity {
   player(int id, sf::Vector2f position, ressourceManager& res)
       : Entity(id, "player", position, res.humanAnimations,
                GameDatas::humanSize, true, GameDatas::humanSpeed, true){
-    // aSprite = res.humanAnimations;
-    //  aSprite.addAnimation("walkLeft", "walk", 30);
   }
   bool canPlantCrop();
   void updateCooldowns();
