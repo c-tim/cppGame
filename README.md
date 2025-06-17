@@ -1,4 +1,31 @@
 # cppGame
+## Nom : The Agricult
+
+## Synopsis :
+Dans un monde parfait ou l'agriculture n'a jamais existé, un groupe de séparatistes utilise une machine à voyager dans le temps pour partager la technologie à des êtres humains à l'ère préhistorique, tout en prenant garde à ne pas se faire prendre par la police temporelle.
+
+## Description :
+Le jeu a deux équipes : 2 voyageurs cachés parmi les foule, et le chercheur (qui a la souris).
+
+### Joueurs cachés (2 joueurs):
+#### touches :
+premier joueur :ZQSD (E pour planter)
+deuxième joueur : flèches directionnelles ( touche ; pour planter)
+
+objectif : imiter les humains dans la scènes et planter des plants de pommes de terre pour marquer des points.
+
+### Joueur chercheur 
+#### touches :
+clic gauche pour deplacer un humain (joueur ou non-joueurs), clic-droit pour "vérifier" l'humain sélectionné.
+Si l'humain sélectionné est bien un joueur, la partie s'arrête (en l'occurrence par une sortie de la fenêtre).
+
+
+
+
+
+
+
+##English
 
 ## author : Timothée Cuq
 ## subject : Agriculture is the worst error of mankind
