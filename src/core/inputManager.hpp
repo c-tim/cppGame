@@ -2,8 +2,8 @@
 #include <gameManager.hpp>
 
 
-sf::Vector2i getInputsKeyboard();
+sf::Vector2i getInputsKeyboard(struct player_info keys);
 
-void getInputCrop(player &p);
+bool getInputCrop(player &p);
 
 void checkIfHumanClicked(sf::RenderWindow &window);

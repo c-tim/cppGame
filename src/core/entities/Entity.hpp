@@ -36,13 +36,14 @@ class Entity {
   public:
   entityState state;
   bool playable;
+  int zOrder = 0 ; //the highest zOrder is rendered first (sprite behind the others)
   virtual ~Entity() {};
   sf::Vector2f getPosition();
 
   void setPosition(sf::Vector2f pos);
 
   bool canHaveNewDestination();
-
+float scale;
   bool has_destination = false;
   const bool pickable;
 
@@ -52,6 +53,7 @@ class Entity {
       : id{id},
         type{type},
         feet_position{position},
+        scale{scale},
         aSprite{templateAnimatedSprite},
         speed{speed},
         playable{isPlayable},

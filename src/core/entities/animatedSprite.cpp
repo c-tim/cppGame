@@ -4,10 +4,11 @@
 using std::string, std::cout;
 
 void animatedSprite::addAnimation(const string &path, const string &name,
-                                  int count, int speed) {
+                                  int count, int speed, float scale) {
   struct animation newAnim;
   newAnim.numberFrame = count;
   newAnim.ticksBetweenFrame = speed;
+  newAnim.adjustScale = scale;
   // TODO change the beginning and the end (-1) to have the frame 0 (and correct
   // it in the name of the ressources)
   // UPDATE : for unknown reason walkL/R/U/D0 is not recognized so skip the
@@ -38,6 +39,8 @@ void animatedSprite::renderFrameOfAnimation(sf::RenderWindow &window, int anim,
 
   // animations[anim].texture[frame].update(window);
   sprite.setTexture(animations[anim].texture[frame], true);
+  sprite.setScale(sf::Vector2f{animations[anim].adjustScale * scale,
+                               animations[anim].adjustScale * scale});
 
   window.draw(sprite);
 }
@@ -93,13 +96,16 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
         currentTickWaited) {
       currentTickWaited = 0;
       nextFrameAnim();
-      //cout << "set anim " << currentFrame << "/" << currentTickWaited << "...."
-       //    << currentAnim << "\n";
+      // cout << "set anim " << currentFrame << "/" << currentTickWaited <<
+      // "...."
+      //     << currentAnim << "\n";
     }
   }
   // sprite.setTexture(animations[currentAnim].texture[currentFrame]);
   animations[currentAnim].texture[currentFrame].setSmooth(false);
   setTexture(animations[currentAnim].texture[currentFrame]);
+  sprite.setScale(sf::Vector2f{animations[currentAnim].adjustScale * scale,
+                               animations[currentAnim].adjustScale * scale});
   sprite.setPosition(pos);
 
   window.draw(sprite);
@@ -108,9 +114,13 @@ void animatedSprite::renderNextTickAnimation(sf::RenderWindow &window,
 /// @brief increment @var currentFrame and reset animation if looped
 void animatedSprite::nextFrameAnim() {
   currentFrame++;
-  if (currentFrame >= animations[currentAnim].numberFrame &&
-      animations[currentAnim].looped) {
-    currentFrame = 0;
+  if (currentFrame >= animations[currentAnim].numberFrame) {
+    if (animations[currentAnim].looped) {
+      currentFrame = 0;
+
+    } else {
+      currentFrame = animations[currentAnim].numberFrame - 1;
+    }
   }
 }
 
@@ -126,18 +136,20 @@ void animatedSprite::setTexture(sf::Texture &t) {
   sf::Vector2f centerTexture{t.getSize().x / 2, t.getSize().y / 2};
   sprite.setOrigin(centerTexture);
   sf::Vector2u textureSize = t.getSize();
-  /*  
+  /*
       if (textureSize.y > 1) {
         //sprite.setTextureRect(sf::IntRect(0, 0, texSize.x, texSize.y - 1));
-                sprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(textureSize.x), static_cast<int>(textureSize.y) - 1));
+                sprite.setTextureRect(sf::IntRect(0, 0,
+    static_cast<int>(textureSize.x), static_cast<int>(textureSize.y) - 1));
     }*/
   // sprite.setTextureRect(sf::IntRect(0,0, t.getSize().x, t.getSize().y));
 
-    if (textureSize.y > 1) {
-        sprite.setTextureRect(sf::IntRect( sf::Vector2i(0, 0),sf::Vector2i(textureSize.x, textureSize.y - 1)));
-    } else {
-        //sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
-    }
+  if (textureSize.y > 1) {
+    sprite.setTextureRect(sf::IntRect(
+        sf::Vector2i(0, 0), sf::Vector2i(textureSize.x, textureSize.y - 1)));
+  } else {
+    // sprite.setTextureRect(sf::IntRect(0, 0, textureSize.x, textureSize.y));
+  }
 }
 
 void animatedSprite::spriteSetScale(float x, float y) {

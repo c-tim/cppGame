@@ -6,6 +6,7 @@
 #include <random>
 
 #define EM entityManager
+#define key sf::Keyboard::Key
 
 using std::cout;
 
@@ -35,10 +36,11 @@ void EM::generateHuman(ressourceManager &res) {
   spawned_entities.push_back(std::move(ptrHuman));
 }
 
-void EM::generatePlayer(ressourceManager &res) {
+void EM::generatePlayer(ressourceManager &res, int index_Player) {
   std::unique_ptr<player> p = std::make_unique<player>(
       idNextEntity, random_pos_in_playable_area(), res);
   ++idNextEntity;
+  setPlayerInfo(index_Player, p->keyPlayer);
   cout << "spawned human : " << p->to_string() << "\n";
   player *p_ptr = p.get();
 
@@ -61,8 +63,12 @@ void EM::generateCrop(ressourceManager &res, sf::Vector2f pos) {
 }
 void EM::addEntity(Entity *entity) { cout << "remove this"; }
 
+// choose the Zorder and then the y position to select the priority to render
 bool EM::compZOrderEntity(std::unique_ptr<Entity> &a,
                           std::unique_ptr<Entity> &b) {
+  if (a->zOrder != b->zOrder) {
+    return a->zOrder > b->zOrder;
+  }
   return a->getPosition().y < b->getPosition().y;
 }
 
@@ -77,6 +83,7 @@ void EM::renderEntities(sf::RenderWindow &window) {
   for (const auto &entity : spawned_entities) {
     entity->render(window);
   }
+  
 
   /*for (auto &e : players) {
      e.render(window);
@@ -120,7 +127,11 @@ void EM::checkInputOtherActionsPlayers(ressourceManager &res) {
   // cout<<" qedd "<< players.size()<<"\n";
   for (auto &e : players) {
     player p = *e;
-    getInputCrop(p);
+    if (tick_since_lastPlant_grow >= GameDatas::COOLDOWN_PLANT_TREE) {
+      if (getInputCrop(p)) {
+        tick_since_lastPlant_grow = 0;
+      }
+    }
   }
 
   for (auto &pos : crop_to_plant_queue) {
@@ -143,14 +154,16 @@ void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
   }
   // soit on regarde si une nouvelle entite est selectionnée
   else {
-   /* sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
-    currentEntitySelected = sprite_clicked_visitor.getPickableEntitySelected(
-        currentEntitySelected, &spawned_entities);*/
-        currentEntitySelected = getPickableEntitySelected(&spawned_entities, mousePos);
-        if(currentEntitySelected!=nullptr){
-          currentEntitySelected->has_destination=false;
-          currentEntitySelected->toIdle(); //TODO here change the animation to grabbed later if time
-        }
+    /* sprite_clicked_visitor.setMousePos((sf::Vector2f)mousePos);
+     currentEntitySelected = sprite_clicked_visitor.getPickableEntitySelected(
+         currentEntitySelected, &spawned_entities);*/
+    currentEntitySelected =
+        getPickableEntitySelected(&spawned_entities, mousePos);
+    if (currentEntitySelected != nullptr) {
+      currentEntitySelected->has_destination = false;
+      currentEntitySelected->toIdle();  // TODO here change the animation to
+                                        // grabbed later if time
+    }
   }
 }
 
@@ -172,15 +185,22 @@ Entity *EM::getPickableEntitySelected(
   return nullptr;
 }
 
-
-player* EM::getPlayerSelected(){
-  //not optimal but works 
-    if (currentEntitySelected == nullptr) {
-        return nullptr;
-    }
-    if(currentEntitySelected->pickable){
-      return (player*)currentEntitySelected;
-          //gameManager::instance->newPlayerBusted();
-    }
+player *EM::getPlayerSelected() {
+  // not optimal but works
+  if (currentEntitySelected == nullptr) {
     return nullptr;
+  }
+  if (currentEntitySelected->pickable) {
+    return (player *)currentEntitySelected;
+    // gameManager::instance->newPlayerBusted();
+  }
+  return nullptr;
+}
+
+void setPlayerInfo(int index, struct player_info &info) {
+  if (index == 0) {
+    info = {key::Up, key::Left, key::Down, key::Right, key::Semicolon};
+  } else if (index == 1) {
+    info = {key::Z, key::Q, key::S, key::D, key::E};
+  }
 }

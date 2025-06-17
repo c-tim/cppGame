@@ -1,18 +1,24 @@
 #pragma once
 
-
 #include <SFML/Graphics.hpp>
+
 #include <iostream>
 
 // namespace for all unmodified datas
 namespace GameDatas {
-const int spawned_pnj = 20;
+const int spawned_pnj = 10;
 
 const std::vector<int> playableAreaX{20, 1870};
 const std::vector<int> playableAreaY{90, 930};
 
+const int number_players = 2;
+
+const float humanSize = 5;
+
 const float humanSpeed = 0.08;
 const float cropSpeed = 0.0001;
+
+const int COOLDOWN_PLANT_TREE = 5000;
 
 const float ratioMovePNJStart = 0.7;
 const double ratioMovePNJGameLoop = 0.01;

@@ -13,6 +13,7 @@ class animatedSprite {
     float ticksBetweenFrame;  // number of tick between each frame
     int numberFrame;
     bool looped = true;
+    float adjustScale = 1; 
   };
   sf::Texture timmy;
   sf::Sprite sprite;
@@ -60,7 +61,7 @@ class animatedSprite {
                                bool canSkipFrame = true);
 
   void addAnimation(const std::string &path, const std::string &nameImage,
-                    int numberImage, int speed = 1);
+                    int numberImage, int speed = 1, float scale = 1);
 
   // used to debug animantion
   void renderFrameOfAnimation(sf::RenderWindow &window, int animation,

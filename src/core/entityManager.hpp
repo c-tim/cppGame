@@ -10,6 +10,7 @@
 
 
 sf::Vector2f random_pos_in_playable_area();
+void setPlayerInfo(int index, struct player_info &info);
 
 class entityManager {
  private:
@@ -32,6 +33,7 @@ class entityManager {
   spriteClickedVisitor sprite_clicked_visitor;
 
  public:
+ int tick_since_lastPlant_grow = 0;
   Entity *currentEntitySelected = nullptr;
 
   void swapStateToMovePNJEntities(float ratioToMove);
@@ -43,7 +45,7 @@ class entityManager {
   void checkInputOtherActionsPlayers(ressourceManager &res);
   void addCropPoseToQueue(sf::Vector2f pos);
 
-  void generatePlayer(ressourceManager &res);
+  void generatePlayer(ressourceManager &res, int indexPlayer);
   void generateHuman(ressourceManager &res);
   void generateHumans(int count, ressourceManager &res);
   void generateCrop(ressourceManager &res, sf::Vector2f pos);

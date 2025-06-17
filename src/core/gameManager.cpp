@@ -3,6 +3,7 @@
 #include <inputManager.hpp>
 #include <iostream>
 
+#include "Player.hpp"
 using std::cout;
 
 // TODO ask if good practice
@@ -16,13 +17,18 @@ gameManager *gameManager::instance;
 void gm::initialize_game() {
   currentGameState = gameState::InGame;
   entity_manager.generateHumans(GameDatas::spawned_pnj, res);
-  entity_manager.generatePlayer(res);
+  for (int i = 0; i < numberPlayer; i++)
+  {
+    entity_manager.generatePlayer(res, i);
+  }
+  
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJStart);
 }
 
 void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   entity_manager.swapStateToMovePNJEntities(GameDatas::ratioMovePNJGameLoop);
   entity_manager.swapStateToIdlePNJEntities(GameDatas::ratioIdlePNJGameLoop);
+  entity_manager.tick_since_lastPlant_grow+=deltaTimeMilli();
   entity_manager.moveEntities();
 
   entity_manager.checkInputOtherActionsPlayers(res);
@@ -30,7 +36,19 @@ void gm::applyGameLoopAndRender(sf::RenderWindow &window) {
   checkIfHumanClicked(window);
   res.renderTilemap(window);
   entity_manager.renderEntities(window);
+  renderScore(window);
 }
+
+ void gameManager::renderScore(sf::RenderWindow &window){
+  //sf::RectangleShape shape({70,40});
+   // shape.setFillColor(sf::Color::Green);
+    sf::Text t{res.fontGame,"Score : "+std::to_string(Score)};
+    t.setPosition({700,0});
+    //shape.setPosition({100,0});
+   // window.draw(shape);
+    window.draw(t);
+
+ }
 
 int gameManager::deltaTimeMilli() {
   return deltaTime_calculated.asMilliseconds();
@@ -48,6 +66,7 @@ void gameManager::callInputEvent() {
 
 bool gameManager::newCropPlanted(sf::Vector2f pos) {
   instance->entity_manager.addCropPoseToQueue(pos);
+  addScore(100);
   return true;
 }
 
@@ -68,3 +87,9 @@ void gameManager::movePlayerSelected(sf::Vector2f mousePos) {
 }
 
 void gameManager::callEntityManagerFaitLAppel() { entity_manager.faitLAppel(); }
+
+
+void gameManager::addScore(int score){
+ instance->Score+=score;
+}
+

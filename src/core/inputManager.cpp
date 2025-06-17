@@ -2,7 +2,6 @@
 #include <gameEvents.hpp>
 #include <inputManager.hpp>
 #include <iostream>
-
 #include "SFML/Graphics.hpp"
 
 #define sfkey sf::Keyboard
@@ -14,18 +13,18 @@ const int TRESHOLD_MAX_CLICK_DURATION =
     1000;  // if click longer than that forget it (allow the player to change its
           // mind)
 
-sf::Vector2i getInputsKeyboard() {
+sf::Vector2i getInputsKeyboard(struct player_info keys) {
   sf::Vector2i dir{0, 0};
-  if (sfkey::isKeyPressed(sfkey::Key::Right)) {
+  if (sfkey::isKeyPressed(keys.keyRight)) {
     dir.x += 1;
   }
-  if (sfkey::isKeyPressed(sfkey::Key::Left)) {
+  if (sfkey::isKeyPressed(keys.keyLeft)) {
     dir.x -= 1;
   }
-  if (sfkey::isKeyPressed(sfkey::Key::Down)) {
+  if (sfkey::isKeyPressed(keys.keyDown)) {
     dir.y += 1;
   }
-  if (sfkey::isKeyPressed(sfkey::Key::Up)) {
+  if (sfkey::isKeyPressed(keys.keyUp)) {
     dir.y -= 1;
   }
 
@@ -33,13 +32,15 @@ sf::Vector2i getInputsKeyboard() {
   return dir;
 }
 
-void getInputCrop(player &p) {
-  if (sf::Keyboard::isKeyPressed(sfkey::Key::E)) {
-    if (p.canPlantCrop()) {
-      p.resetCooldownPlantCrop();
-      gameManager::newCropPlanted(p.getPosition());
-    }
+bool getInputCrop(player &p) {
+  if (sf::Keyboard::isKeyPressed(p.keyPlayer.keyPlant)) {
+    gameManager::newCropPlanted(p.getPosition());
+    return true;
+    /*if (p.tick_since_last_plant_crop > GameDatas::COOLDOWN_PLANT_TREE) {
+      p.tick_since_last_plant_crop=0;
+    }*/
   }
+  return false;
 }
 
 void checkDurationCLick(sf::RenderWindow &window, sf::Vector2f mousePos) {
@@ -87,7 +88,7 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
 
 void gameManager::newPlayerBusted() {
   currentHidersBusted++;
-  if (currentHidersBusted >= numberHiders) {
+  if (currentHidersBusted >= numberPlayer) {
     currentGameState = gameState::CantMove;
   }
 }
