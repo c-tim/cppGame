@@ -144,6 +144,8 @@ void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
   if (currentEntitySelected != nullptr) {
     cout << "RELEASE SELECTED \n";
     currentEntitySelected->setPosition((sf::Vector2f)mousePos);
+    currentEntitySelected->toIdle();
+    currentEntitySelected->zOrder=0;
     currentEntitySelected = nullptr;
   }
   // soit on regarde si une nouvelle entite est selectionnée
@@ -152,7 +154,9 @@ void EM::moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos) {
         getPickableEntitySelected(&spawned_entities, mousePos);
     if (currentEntitySelected != nullptr) {
       currentEntitySelected->has_destination = false;
-      currentEntitySelected->toIdle();  // TODO here change the animation to
+      currentEntitySelected->state.isFlying(); 
+          currentEntitySelected->zOrder=-5;
+ // TODO here change the animation to
                                         // grabbed later if time (pas implemente mais je voulais mettre une animation de personnage qui agite les bras)
     }
   }
@@ -167,6 +171,7 @@ void EM::moveSelectedPlayerToMouse(sf::Vector2f mousePos) {
 
 Entity *EM::getPickableEntitySelected(
     std::vector<std::unique_ptr<Entity>> *list, sf::Vector2f mousePos) {
+      
   for (auto const &e : *list) {
     if (e->pickable && e->isSpriteInBoundOfPos(mousePos)) {
       return e.get();

@@ -6,9 +6,22 @@ using std::cout;
 int entityState::getState() { return currentState; }
 
 /* The animation are sorted in ressourceLoader.cpp to be in this order (Up Left Down Right)*/
-int entityState::getIdAnim() { return (4 * currentState + currentDirection); }
+int entityState::getIdAnim() { 
+  
+  if(currentState==FLYING){
+    return 8;
+  }else{
+    return (4 * currentState + currentDirection); }
+
+  }
 
 int entityState::changeIdAnim(animatedSprite &varAnim) {
+
+  if(currentState==FLYING){
+    varAnim.setCurrentAnim(8);
+    return 0;
+  }
+
   varAnim.setCurrentAnim(4 * currentState + currentDirection);
   return 0;
 }
@@ -26,6 +39,11 @@ void entityState::toIdle(int dir) {
 }
 
 void entityState::moveDirection(sf::Vector2i normalized_dir) {
+
+if(currentState==FLYING){
+  return;
+}
+
   // the entity has to move in only one direction, no diagonals
   if (!((abs(normalized_dir.x) == 1 && normalized_dir.y == 0) ||
         (abs(normalized_dir.y) == 1 && normalized_dir.x == 0))) {
@@ -113,3 +131,8 @@ void entityState::isMoving(int dir) {
     currentDirection = dir;
   }
 }
+
+  void entityState::isFlying(){
+    currentState = FLYING;
+  }
+

@@ -1,6 +1,7 @@
 #include <Player.hpp>
 #include <gameManager.hpp>
 #include <inputManager.hpp>
+#include <entityState.hpp>
 
 void player::render(sf::RenderWindow &window) {
   aSprite.setCurrentAnim(state.getIdAnim());
@@ -29,7 +30,7 @@ void player::move() {
   tick_since_last_plant_crop += gameManager::deltaTime().asSeconds();
 
   sf::Vector2i dir = getInputsKeyboard(keyPlayer);
-  if (dir == sf::Vector2i{0, 0}) {
+  if (dir == sf::Vector2i{0, 0} && state.getState()!= entityState::FLYING) {
     toIdle();
   } else {
     moveWithDir((sf::Vector2f)dir);

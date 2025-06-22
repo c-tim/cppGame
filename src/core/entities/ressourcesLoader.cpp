@@ -23,6 +23,9 @@ void ressourceManager::initializeRessourcesGame() {
   humanAnimations.addAnimation("walkDown", "walkD", 33, 50);
   humanAnimations.addAnimation("walkRight", "walkR", 33, 50);
 
+    humanAnimations.addAnimation("flying", "flying", 37, 30);
+    humanAnimations.animations[8].adjustScale=1.4;
+
   /*same for crops but with loop = false*/
   patateAnimations.addAnimation("patateCrops", "patateCrops", 21, 2000);
   patateAnimations.animations[0].looped =false;
