@@ -2,6 +2,7 @@
 #include <gameEvents.hpp>
 #include <inputManager.hpp>
 #include <iostream>
+
 #include "SFML/Graphics.hpp"
 
 #define sfkey sf::Keyboard
@@ -10,8 +11,8 @@ using std::cout;
 
 int tickSinceLastClick = 0;
 const int TRESHOLD_MAX_CLICK_DURATION =
-    1000;  // if click longer than that forget it (allow the player to change its
-          // mind)
+    1000;  // if click longer than that forget it (allow the player to change
+           // its mind)
 
 sf::Vector2i getInputsKeyboard(struct player_info keys) {
   sf::Vector2i dir{0, 0};
@@ -32,23 +33,22 @@ sf::Vector2i getInputsKeyboard(struct player_info keys) {
 
 bool getInputCrop(player &p) {
   if (sf::Keyboard::isKeyPressed(p.keyPlayer.keyPlant)) {
-    gameManager::newCropPlanted(p.getPosition());
+    gameManager::instance->newCropPlanted(p.getPosition());
     return true;
-
   }
   return false;
 }
 
 void checkDurationCLick(sf::RenderWindow &window, sf::Vector2f mousePos) {
-  if (tickSinceLastClick <= TRESHOLD_MAX_CLICK_DURATION && tickSinceLastClick>0) {
-    gameManager::OnMouseLeftClicked(mousePos);
+  if (tickSinceLastClick <= TRESHOLD_MAX_CLICK_DURATION &&
+      tickSinceLastClick > 0) {
+    gameManager::instance->OnMouseLeftClicked(mousePos);
   }
 }
 
 void checkIfHumanClicked(sf::RenderWindow &window) {
   sf::Vector2f rescaledMousePos =
       window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
 
   if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
     sf::CircleShape shape(50.F);
@@ -60,7 +60,7 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
     window.draw(shape);
     window.draw(shape2);
 
-    tickSinceLastClick+= gameManager::deltaTimeMilli();
+    tickSinceLastClick += gameManager::instance->deltaTimeMilli();
   } else {
     checkDurationCLick(window, rescaledMousePos);
     tickSinceLastClick = 0;
@@ -69,16 +69,16 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
     sf::CircleShape shape(15.F);
     shape.setFillColor(sf::Color::Magenta);
     window.draw(shape);
-    gameManager::movePlayerSelected(
+    gameManager::instance->movePlayerSelected(
         window.mapPixelToCoords(sf::Mouse::getPosition(window)));
     shape.setPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
     /*Debug shape*/
   }
 
-//the right mouse is used to eliminate a character and the players
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-        gameManager::OnMouseRightClicked(rescaledMousePos);
-    }
+  // the right mouse is used to eliminate a character and the players
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+    gameManager::instance->OnMouseRightClicked(rescaledMousePos);
+  }
 }
 
 void gameManager::newPlayerBusted() {

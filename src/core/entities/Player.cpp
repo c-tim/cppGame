@@ -27,7 +27,7 @@ void player::checkForBoundaries() {
 
 void player::move() {
   //not supposed to be here but I need to update it every tick (lack of time)
-  tick_since_last_plant_crop += gameManager::deltaTime().asSeconds();
+  tick_since_last_plant_crop += gameManager::instance->deltaTime().asSeconds();
 
   sf::Vector2i dir = getInputsKeyboard(keyPlayer);
   if (dir == sf::Vector2i{0, 0} && state.getState()!= entityState::FLYING) {
@@ -44,7 +44,7 @@ bool player::canPlantCrop() {
   return keyPlayer.curent_cooldownPlant >= GameDatas::COOLDOWN_PLANT_TREE;
 }
 void player::updateCooldowns() {
-  keyPlayer.curent_cooldownPlant += gameManager::deltaTimeMilli();
+  keyPlayer.curent_cooldownPlant += gameManager::instance->deltaTimeMilli();
 }
 
 void player::resetCooldownPlantCrop() { keyPlayer.curent_cooldownPlant = 0; }

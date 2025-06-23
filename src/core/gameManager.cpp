@@ -55,9 +55,6 @@ void gameManager::setDeltaTime() {
   deltaTime_calculated = gameManager::clock.restart();
 }
 
-void gameManager::callInputEvent() {
-  // getInputsKeyboard();
-}
 
 bool gameManager::newCropPlanted(sf::Vector2f pos) {
   instance->entity_manager.addCropPoseToQueue(pos);

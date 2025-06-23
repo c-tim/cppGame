@@ -1,6 +1,6 @@
 #pragma once
 #include <myMain.h>
-#include "gameDatas.hpp"
+
 #include <Entity.hpp>
 #include <SFML/Graphics.hpp>
 #include <entityManager.hpp>
@@ -10,8 +10,12 @@
 #include <ressourcesLoader.hpp>
 #include <string>
 
+#include "gameDatas.hpp"
+
+using std::cout;
+
 // TODO for later
-enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 , ENDGAME = 3};
+enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2, ENDGAME = 3 };
 
 class gameManager {
  private:
@@ -26,7 +30,7 @@ class gameManager {
   int currentHidersBusted = 0;
 
  public:
-  int Score=0;
+  int Score = 0;
   int numberPlayer = GameDatas::number_players;
   void newPlayerBusted();
 
@@ -34,23 +38,27 @@ class gameManager {
 
   static gameManager *instance;
 
-  static bool newCropPlanted(sf::Vector2f pos);
-  static void OnMouseLeftClicked(sf::Vector2f mousePos);
-  static void OnMouseRightClicked(sf::Vector2f mousePos);
-  static void movePlayerSelected(sf::Vector2f mousePos);
-  static void addScore(int Score);
-
+  // Function linked to game events, called using instance
+  bool newCropPlanted(sf::Vector2f pos);
+  void OnMouseLeftClicked(sf::Vector2f mousePos);
+  void OnMouseRightClicked(sf::Vector2f mousePos);
+  void movePlayerSelected(sf::Vector2f mousePos);
+  void addScore(int Score);
   void callEntityManagerFaitLAppel();
-
   void initialize_game();
-  static int deltaTimeMilli();
-  static sf::Time deltaTime();
-
-  static void setDeltaTime();
-  static void callInputEvent();
   void renderScore(sf::RenderWindow &window);
   void applyGameLoopAndRender(sf::RenderWindow &window);
+
+  int deltaTimeMilli();
+  sf::Time deltaTime();
+  void setDeltaTime();
+
+  // constructor
   gameManager() : res{} {
+    if (instance != nullptr) {
+      cout << "ERROR instance already set\n";
+      return;
+    }
     instance = this;
     gameManager::clock.start();
   }

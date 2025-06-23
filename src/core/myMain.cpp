@@ -59,7 +59,7 @@ int myMain() {
     if(temp_i > 30){
       temp_i = 0;
     }
-    gameManager::setDeltaTime();
+    gameManager::instance->setDeltaTime();
     window.clear();
    game_manager.applyGameLoopAndRender(window);
     window.display();
