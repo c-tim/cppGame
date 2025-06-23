@@ -11,7 +11,7 @@
 #include <string>
 
 // TODO for later
-enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 };
+enum class gameState { StartMenu = 0, InGame = 1, CantMove = 2 , ENDGAME = 3};
 
 class gameManager {
  private:

@@ -3,21 +3,20 @@
 
 using std::cout;
 
-int entityState::getState() { return currentState; }
+entityState::s_state entityState::getState() { return currentState; }
 
-/* The animation are sorted in ressourceLoader.cpp to be in this order (Up Left Down Right)*/
-int entityState::getIdAnim() { 
-  
-  if(currentState==FLYING){
+/* The animation are sorted in ressourceLoader.cpp to be in this order (Up Left
+ * Down Right)*/
+int entityState::getIdAnim() {
+  if (currentState == FLYING) {
     return 8;
-  }else{
-    return (4 * currentState + currentDirection); }
-
+  } else {
+    return (4 * currentState + currentDirection);
   }
+}
 
 int entityState::changeIdAnim(animatedSprite &varAnim) {
-
-  if(currentState==FLYING){
+  if (currentState == FLYING) {
     varAnim.setCurrentAnim(8);
     return 0;
   }
@@ -26,11 +25,9 @@ int entityState::changeIdAnim(animatedSprite &varAnim) {
   return 0;
 }
 
-void entityState::setCurrentDirection(int dir) {
-  currentDirection = dir;
-}
+void entityState::setCurrentDirection(s_direction dir) { currentDirection = dir; }
 
-void entityState::toIdle(int dir) {
+void entityState::toIdle(s_direction dir) {
   currentState = IDLE;
 
   if (dir >= 0 && dir <= 3) {
@@ -39,10 +36,9 @@ void entityState::toIdle(int dir) {
 }
 
 void entityState::moveDirection(sf::Vector2i normalized_dir) {
-
-if(currentState==FLYING){
-  return;
-}
+  if (currentState == FLYING) {
+    return;
+  }
 
   // the entity has to move in only one direction, no diagonals
   if (!((abs(normalized_dir.x) == 1 && normalized_dir.y == 0) ||
@@ -56,8 +52,7 @@ if(currentState==FLYING){
   currentDirection = vecDirToDir((sf::Vector2f)normalized_dir);
 }
 
-
-sf::Vector2i entityState::dirToVecDir(int dir) {
+sf::Vector2i entityState::dirToVecDir(s_direction dir) {
   // DONE check if correct vector -> unitTests
   if (dir == UP) {
     return sf::Vector2i{0, -1};
@@ -72,7 +67,7 @@ sf::Vector2i entityState::dirToVecDir(int dir) {
   return sf::Vector2i{0, 0};
 }
 
-int entityState::vecDirToDir(sf::Vector2f vec) {
+entityState::s_direction entityState::vecDirToDir(sf::Vector2f vec) {
   if (vec.x == 0 and vec.y > 0) {
     return DOWN;
   } else if (vec.x == 0 and vec.y < 0) {
@@ -83,16 +78,16 @@ int entityState::vecDirToDir(sf::Vector2f vec) {
     return RIGHT;
   }
 
-  return -1;
+  return UNDEFINED;
 }
 
 // strategy, if on one axis choose it, then if the currentDirection can be used
 // to get closer to destination use it
 //  else pick random axis between the two of destination (+/- x or +/- y)
-int entityState::getAxisMoving(sf::Vector2f direction) {
-  int testDir = vecDirToDir((sf::Vector2f)direction);
+entityState::s_direction entityState::getAxisMoving(sf::Vector2f direction) {
+  s_direction testDir = vecDirToDir((sf::Vector2f)direction);
   // -1 if null vector or two axis involved
-  if (testDir != -1) {
+  if (testDir != UNDEFINED) {
     return testDir;
   }
 
@@ -109,7 +104,7 @@ int entityState::getAxisMoving(sf::Vector2f direction) {
     return currentDirection;
   }
 
-  //Now we know direction and currentDirection are opposed for both x and y
+  // Now we know direction and currentDirection are opposed for both x and y
 
   // last strategy random between the two axis
   if ((double)rand() / RAND_MAX > 0.5) {
@@ -125,14 +120,11 @@ int entityState::getAxisMoving(sf::Vector2f direction) {
   return DOWN;
 }
 
-void entityState::isMoving(int dir) {
+void entityState::isMoving(s_direction dir) {
   currentState = MOVING;
   if (dir != -1) {
     currentDirection = dir;
   }
 }
 
-  void entityState::isFlying(){
-    currentState = FLYING;
-  }
-
+void entityState::isFlying() { currentState = FLYING; }

@@ -41,7 +41,7 @@ void Entity::moveToDestination() {
   }
   moveWithDir(direction);
 }
-void Entity::toIdle(int dir) { state.toIdle(dir); }
+void Entity::toIdle(entityState::s_direction dir) { state.toIdle(dir); }
 
 bool Entity::isMoving() { return state.getState() == 1; }
 

@@ -75,7 +75,7 @@ float scale;
 
   void setDestination(sf::Vector2f destination);
 
-  void toIdle(int dir = -1);
+  void toIdle(entityState::s_direction dir = entityState::s_direction::UNDEFINED);
 
   bool isMoving();
 
