@@ -6,7 +6,7 @@
 
 // namespace for all unmodified datas
 namespace GameDatas {
-const int spawned_pnj = 20;
+const int spawned_pnj = 30;
 
 const std::vector<int> playableAreaX{20, 1870};
 const std::vector<int> playableAreaY{90, 930};
@@ -27,6 +27,13 @@ const double ratioIdlePNJGameLoop = 0.0001;
 
 const float sizeBackgroundTileMap = 4;
 const sf::Vector2i dimensionsBackground{20,10};
+
+const int pointsToHidersWin = 300;
+const int pointToHidersAddedForEachedHider = 100;
+const int pointsWonCropsPlanted = 100;
+//const int pointsLostBustedHiders = 200; 
+
+const int durationGameSeconds = 120;
 
 // window datas
 struct windowsData {

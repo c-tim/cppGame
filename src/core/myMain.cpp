@@ -6,6 +6,8 @@
 #include <ressourcesLoader.hpp>
 #include <coucouVisitor.hpp>
 
+#include <thread>
+
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -18,6 +20,10 @@
 
 using namespace std;
 
+
+void thread_load_ressourcesGameLoop(){
+  gameManager::instance->prepareGameLoop();
+}
 
 
 
@@ -32,17 +38,18 @@ int myMain() {
 
   gameManager game_manager{};
 
-
   sf::CircleShape shape(150.F);
   shape.setFillColor(sf::Color::Green);
 
 
-  game_manager.initialize_game(); //TODO merge all behaviours for lisibility
+  //game_manager.initialize_game(); //TODO merge all behaviours for lisibility
+game_manager.initialize_startMenu();
+  std::thread(thread_load_ressourcesGameLoop).detach();
 
-  game_manager.callEntityManagerFaitLAppel();
+ // game_manager.callEntityManagerFaitLAppel();
 
   int temp_i = 0;
-  while (window.isOpen() && game_manager.currentGameState == gameState::InGame) {
+  while (window.isOpen() && game_manager.currentGameState != gameState::QUIT) {
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>()) window.close();
 

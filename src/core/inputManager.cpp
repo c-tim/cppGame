@@ -9,7 +9,9 @@
 
 using std::cout;
 
-int tickSinceLastClick = 0;
+int tickSinceLastClickLeft = 0;
+int tickSinceLastClickRight = 0;
+
 const int TRESHOLD_MAX_CLICK_DURATION =
     1000;  // if click longer than that forget it (allow the player to change
            // its mind)
@@ -39,10 +41,19 @@ bool getInputCrop(player &p) {
   return false;
 }
 
-void checkDurationCLick(sf::RenderWindow &window, sf::Vector2f mousePos) {
-  if (tickSinceLastClick <= TRESHOLD_MAX_CLICK_DURATION &&
-      tickSinceLastClick > 0) {
+bool isSpacePressed() { return sf::Keyboard::isKeyPressed(sfkey::Key::Space); }
+
+void checkDurationClickLeft(sf::RenderWindow &window, sf::Vector2f mousePos) {
+  if (tickSinceLastClickLeft <= TRESHOLD_MAX_CLICK_DURATION &&
+      tickSinceLastClickLeft > 0) {
     gameManager::instance->OnMouseLeftClicked(mousePos);
+  }
+}
+
+void checkDurationClickRight(sf::RenderWindow &window, sf::Vector2f mousePos) {
+  if (tickSinceLastClickRight <= TRESHOLD_MAX_CLICK_DURATION &&
+      tickSinceLastClickRight > 0) {
+    gameManager::instance->OnMouseRightClicked(mousePos);
   }
 }
 
@@ -60,10 +71,10 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
     window.draw(shape);
     window.draw(shape2);
 
-    tickSinceLastClick += gameManager::instance->deltaTimeMilli();
+    tickSinceLastClickLeft += gameManager::instance->deltaTimeMilli();
   } else {
-    checkDurationCLick(window, rescaledMousePos);
-    tickSinceLastClick = 0;
+    checkDurationClickLeft(window, rescaledMousePos);
+    tickSinceLastClickLeft = 0;
 
     /*Debug shape*/
     sf::CircleShape shape(15.F);
@@ -77,13 +88,11 @@ void checkIfHumanClicked(sf::RenderWindow &window) {
 
   // the right mouse is used to eliminate a character and the players
   if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-    gameManager::instance->OnMouseRightClicked(rescaledMousePos);
+    tickSinceLastClickRight +=gameManager::instance->deltaTimeMilli();
+  }else{
+    checkDurationClickRight(window, rescaledMousePos);
+    tickSinceLastClickRight = 0;
+
   }
 }
 
-void gameManager::newPlayerBusted() {
-  currentHidersBusted++;
-  if (currentHidersBusted >= numberPlayer) {
-    currentGameState = gameState::CantMove;
-  }
-}

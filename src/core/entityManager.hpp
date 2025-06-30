@@ -8,7 +8,6 @@
 #include <ressourcesLoader.hpp>
 #include <spriteClickedVisitor.hpp>
 
-
 sf::Vector2f random_pos_in_playable_area();
 void setPlayerInfo(int index, struct player_info &info);
 
@@ -33,7 +32,7 @@ class entityManager {
   spriteClickedVisitor sprite_clicked_visitor;
 
  public:
- int tick_since_lastPlant_grow = 0;
+  int tick_since_lastPlant_grow = 0;
   Entity *currentEntitySelected = nullptr;
 
   void swapStateToMovePNJEntities(float ratioToMove);
@@ -49,6 +48,7 @@ class entityManager {
   void generateHuman(ressourceManager &res);
   void generateHumans(int count, ressourceManager &res);
   void generateCrop(ressourceManager &res, sf::Vector2f pos);
+  void destroyEntity(Entity *entity_to_destroy);
 
   void addEntity(Entity *entity);
 
@@ -56,8 +56,8 @@ class entityManager {
 
   void moveSelectedEntityOrUnSelectIt(sf::Vector2f mousePos);
   void moveSelectedPlayerToMouse(sf::Vector2f mousePos);
-    player* getPlayerSelected();
+  Entity *getEntitySelected();
 
-
-  Entity* getPickableEntitySelected(std::vector<std::unique_ptr<Entity>> *list, sf::Vector2f mousePos);
+  Entity *getPickableEntitySelected(std::vector<std::unique_ptr<Entity>> *list,
+                                    sf::Vector2f mousePos);
 };
