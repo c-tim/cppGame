@@ -5,7 +5,7 @@
 Dans un monde parfait ou l'agriculture n'a jamais existé, un groupe de séparatistes utilise une machine à voyager dans le temps pour partager la technologie à des êtres humains à l'ère préhistorique, tout en prenant garde à ne pas se faire prendre par la police temporelle.
 
 ## Description :
-Le jeu a deux équipes : 2 voyageurs cachés parmi les foule, et le chercheur (qui a la souris).
+Le jeu a deux équipes : 2 voyageurs cachés parmi la foule, et le chercheur (qui a la souris).
 
 ### Joueurs cachés (2 joueurs):
 #### touches :
@@ -17,7 +17,7 @@ objectif : imiter les humains dans la scènes et planter des plants de pommes de
 ### Joueur chercheur 
 #### touches :
 clic gauche pour deplacer un humain (joueur ou non-joueurs), clic-droit pour "vérifier" l'humain sélectionné.
-Si l'humain sélectionné est bien un joueur, la partie s'arrête (en l'occurrence par une sortie de la fenêtre).
+Si l'humain sélectionné est bien un joueur, la partie s'arrête.
 
 
 ## Image :
@@ -31,7 +31,7 @@ Dans le fichier gameDatas.hpp, vous pouvez modifiez les variables constantes du 
 - le nombre d'humains non jouables (stable jusqua 200 sur mon pc 8gb de RAM)
 - la vitesse des humains et des plants de pommes de terre
 - les ratios d'activations des humains (1 ils bougent tout le temps)
-- en milliSeconde, le temps d'attente pour planter (commun a tout les joueurs)
+- en milliSeconde, le temps d'attente pour planter (commun aux joueurs)
 
 
 
